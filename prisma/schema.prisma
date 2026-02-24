@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Plaque {
+  id                 Int      @id @default(autoincrement())
+  mask               String?
+  reg_country        String?
+  company            String?
+  entity             String?
+  activities         String?
+  reg_or_vin         String?
+  reg_plate          String?
+  vin                String?
+  code               String?
+  error_code         Int?
+  car_identification Json
+  processing_info    Json
+  registration_info  Json
+  completed          Boolean  @default(false)
+  createdAt          DateTime @default(now())
+}
+
+model City {
+  idCity         Int                  @id @default(autoincrement()) @db.UnsignedInt
+  name           String               @db.VarChar(255)
+  department     String               @db.VarChar(5)
+  postalCodeList String               @db.VarChar(255)
+  coords         Unsupported("point")
+  slug           String               @unique(map: "slug_UNIQUE") @db.VarChar(255)
+  population     Int?                 @db.UnsignedInt
+  insee          String?              @unique(map: "insee_UNIQUE") @db.VarChar(10)
+
+  @@index([name, postalCodeList], map: "IDX_name")
+}

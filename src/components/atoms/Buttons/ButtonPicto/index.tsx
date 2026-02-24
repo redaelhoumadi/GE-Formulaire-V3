@@ -39,9 +39,9 @@ interface ButtonPictoProps {
 export default function ButtonPicto(props: ButtonPictoProps) {
     const { children, fullWidth, onClick, className, form, style } = props;
 
-    let styleProp = 'text-ge-gray-1 bg-transparent border-1 hover:border-ge-yellow border border-ge-gray-3 focus:ring-4 focus:outline-none focus:ring-gray-100 font-bold text-xs md:text-sm px-5 py-3 items-center mr-2 mb-2 rounded-md';
+    let styleProp = 'text-ge-gray-1 bg-transparent border-1 hover:border-ge-yellow border border-ge-gray-3 focus:ring-4 focus:outline-none focus:ring-gray-100 font-bold text-xs md:text-sm  py-4 items-center mr-2 mb-4 rounded-md';
     styleProp = style == "fill" ? '' : styleProp
-    styleProp = style == "selected" ? 'text-ge-gray-1 border-1 bg-ge-yellow hover:border-ge-yellow border border-ge-yellow focus:ring-4 focus:outline-none focus:ring-gray-100 font-bold text-xs md:text-sm px-5 py-3 items-center mr-2 mb-2 rounded-md' : styleProp
+    styleProp = style == "selected" ? 'text-ge-gray-1 border-1 bg-ge-yellow hover:border-ge-yellow border border-ge-yellow focus:ring-4 focus:outline-none focus:ring-gray-100 font-bold text-xs md:text-sm py-4 items-center mr-2 mb-4 rounded-md' : styleProp
 
     return (
         <button

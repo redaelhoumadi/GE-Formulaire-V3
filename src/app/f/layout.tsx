@@ -111,7 +111,7 @@ export default function Layout({ children }: any) {
                 }
                 <div className="xl:mx-auto xl:max-w-7xl">
                     {/* <div className="xl:mx-24"> */}
-                    <div className="mt-14 xl:mt-0 xl:flex xl:flex-row xl:gap-3">
+                    <div className="mt-14 xl:mt-0 xl:flex xl:flex-row xl:gap-3 flex-col-reverse flex xl:block">
                         
                         <div className="xl:basis-3/4">
                             <div className="xl:container mx-5 xl:mx-auto">
@@ -119,7 +119,7 @@ export default function Layout({ children }: any) {
                             </div>
                         </div>
 
-                        <div className="xl:mt-4 xl:mx-4 xl:top-0 xl:basis-1/4 xl:px-6">
+                        <div className="xl:mt-4 xl:mx-4 xl:top-0 xl:basis-1/4">
                             <ImageHeader
                                 srcMobile={activeStep?.headerImgMobileSrc}
                                 srcDesktop={activeStep?.headerImgDesktopSrc}

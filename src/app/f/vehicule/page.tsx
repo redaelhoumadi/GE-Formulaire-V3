@@ -284,7 +284,7 @@ export default function VehiculePage() {
                     src={GreenCheck}
                     alt="Green Check"
                   />
-                  <p className='text-xs'>Pare-brise en stock</p>
+                  <p className='text-s font-light'>Pare-brise en stock</p>
                 </SectionMessage>
               </div>
             </div>

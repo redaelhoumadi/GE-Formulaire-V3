@@ -64,7 +64,7 @@ export default function RendezVousPage() {
 
         <div id="formRdvIntervention"></div>
 
-        <div onClick={handleScroll('formRdvIntervention')}>
+        <div onClick={handleScroll('formRdvIntervention')} className='px-[8.5rem]'>
           <InterventionTypeSelect
             control={control}
           />
@@ -111,7 +111,7 @@ export default function RendezVousPage() {
                 fullWidth
               />
             </div>
-            <SectionMessage type='secondary' className='mx-3 my-3 justify-center' justify={false}>
+            <SectionMessage type='secondary' className='mx-4 my-4 justify-center' justify={false}>
               <Image
                 className="w-6 h-5 mr-2 -ml-1"
                 priority
@@ -156,7 +156,7 @@ export default function RendezVousPage() {
           </div>
         }
 
-        <p onClick={unknownCalendarClick} className={`${unknownCalendar ? 'text-ge-gray-1' : 'text-ge-gray-3'} text-sm text-center underline cursor-pointer mb-6 mt-4`}>
+        <p onClick={unknownCalendarClick} className={`${unknownCalendar ? 'text-ge-gray-1' : 'text-ge-gray-3'} text-sm text-center underline cursor-pointer mb-6`}>
           Je ne connais pas mon emploi du temps
           <Image
             className="w-3 h-3 my-1 ml-1 inline"

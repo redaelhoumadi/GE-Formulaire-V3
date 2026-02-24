@@ -31,7 +31,7 @@ export const vitrages: ButtonSelectionOption[] = [
     {
         label: <p className='w-full'>
             Autres<br />
-            <span className='text-xs text-ge-gray-3'>(Vitre latérale, toit panoramique, plusieurs vitres)</span>
+            <span className='text-xs font-light text-ge-gray-3'>(Vitre latérale, toit panoramique, plusieurs vitres)</span>
         </p>,
         value: "Autres (Vitre latérale, toit panoramique, plusieurs vitres)",
     }

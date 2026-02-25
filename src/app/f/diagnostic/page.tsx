@@ -132,12 +132,12 @@ export default function DiagnosticPage() {
           {/* MESSAGE A LA FIN */}
           <SectionMessage type='secondary' justify={false} className='mx-20 my-8 justify-center py-2 rounded-md'>
             <Image
-              className="w-6 h-5 mr-2 -ml-1"
+              className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
               priority
               src={GreenCheck}
               alt="Green check"
             />
-            <p className='text-s font-light'>Temps moyen d&apos;intervention : <b>1 heure</b></p>
+            <p className='text-sm font-light'>Temps moyen d&apos;intervention : <span className='font-black'>1 heure</span></p>
           </SectionMessage>
         </Card>
       }

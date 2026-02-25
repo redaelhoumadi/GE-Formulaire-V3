@@ -64,7 +64,7 @@ export default function RendezVousPage() {
 
         <div id="formRdvIntervention"></div>
 
-        <div onClick={handleScroll('formRdvIntervention')} className='px-[8.5rem]'>
+        <div onClick={handleScroll('formRdvIntervention')} className='px-[7.5rem]'>
           <InterventionTypeSelect
             control={control}
           />
@@ -88,12 +88,12 @@ export default function RendezVousPage() {
             </div>
             <SectionMessage type='secondary' className='mx-4 my-4 justify-center' justify={false}>
               <Image
-                className="w-6 h-5 mr-2 -ml-1"
+                className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
                 priority
                 src={GreenCheck}
                 alt="Green check"
               />
-              <p className='text-s font-light'><b>Service gratuit</b> où vous le souhaitez</p>
+              <p className='text-sm font-light'><span className='font-black'>Service gratuit</span> où vous le souhaitez</p>
             </SectionMessage>
           </>
         }
@@ -113,12 +113,12 @@ export default function RendezVousPage() {
             </div>
             <SectionMessage type='secondary' className='mx-4 my-4 justify-center' justify={false}>
               <Image
-                className="w-6 h-5 mr-2 -ml-1"
+                className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
                 priority
                 src={GreenCheck}
                 alt="Green check"
               />
-              <p className='text-s font-light'><b>Un véhicule de prêt</b> vous sera proposé <b>gratuitement</b></p>
+              <p className='text-sm font-light'><span className='font-black'>Un véhicule de prêt</span> vous sera proposé <span className='font-black'>gratuitement</span></p>
             </SectionMessage>
           </>
         }
@@ -168,12 +168,12 @@ export default function RendezVousPage() {
 
         {watchData.creneau && <SectionMessage type='secondary' className='justify-center py-2' justify={false}>
           <Image
-            className="w-6 h-5 mr-2 -ml-1"
+            className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
             priority
             src={GreenCheck}
             alt="Green check"
           />
-          <p className='text-s font-light'>Un horaire précis vous sera communiqué par <b>téléphone</b></p>
+          <p className='text-sm font-light'>Un horaire précis vous sera communiqué par <span className='font-black'>téléphone</span></p>
         </SectionMessage>
         }
 
@@ -189,7 +189,7 @@ export default function RendezVousPage() {
       </div>
       <div className='flex justify-center' id="formRdvSubmit">
         <Link scroll={true} href="/f/vehicule" className='mb-3'>
-          <ButtonPill className="text-xs md:text-sm px-28 mb-2 hover:underline">&lt; Précédent</ButtonPill>
+          <ButtonPill className="text-xs md:text-sm px-28 mb-2 hover:underline">&lt; Retour</ButtonPill>
         </Link>
       </div>
 

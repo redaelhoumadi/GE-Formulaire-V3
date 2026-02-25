@@ -10,6 +10,9 @@ import { redirect } from 'next/navigation'
 import useStore from "@/store/useStore";
 import ScrollUp from "@/components/atoms/ScrollUp";
 import ImageHeader from "@/components/atoms/ImageHeader";
+import Card from "@/components/atoms/Card";
+import SectionHeader from "@/components/atoms/SectionHeader";
+import Image from "next/image";
 
 const mapPaths = new Map([
     ["/f/diagnostic", {
@@ -119,11 +122,25 @@ export default function Layout({ children }: any) {
                             </div>
                         </div>
 
-                        <div className="xl:mt-4 xl:mx-4 xl:top-0 xl:basis-1/4">
-                            <ImageHeader
+                        <div className="xl:mt-4 xl:mx-4 xl:top-0 xl:basis-1/4 flex-col gap-2 flex">
+                        <Card className="sticky top-[8rem] my-0 mb-4">
+                            <SectionHeader className='mt-5 mb-12'>
+                                      Récapitulatif
+                                    </SectionHeader>
+                        </Card>
+                            {/*<ImageHeader
                                 srcMobile={activeStep?.headerImgMobileSrc}
                                 srcDesktop={activeStep?.headerImgDesktopSrc}
-                            />
+                            />*/}
+                            <div className="sticky top-[18rem] my-0">
+                                <Image 
+                            src="/images/reusable/Google-Ratings.png"
+                            alt="Description de l'image"
+                            width={500}
+                            height={300}
+                            priority
+                            /></div>
+                            
                         </div>
                     </div>
                 </div>

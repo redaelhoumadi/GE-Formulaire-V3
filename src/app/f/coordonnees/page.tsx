@@ -192,7 +192,7 @@ export default function CoordonneesPage() {
       </div>
       <div className='flex justify-center'>
         <Link scroll={true} href="/f/rendez-vous" className="mb-3">
-          <ButtonPill className="text-xs md:text-sm px-28 mb-2 hover:underline">&lt; Précédent</ButtonPill>
+          <ButtonPill className="text-xs md:text-sm px-28 mb-2 hover:underline">&lt; Retour</ButtonPill>
         </Link>
       </div>
       {/* AVIS CLIENTS */}

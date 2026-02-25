@@ -94,6 +94,9 @@ export default function VehiculePage() {
                 label: "Autre / Je ne sais pas",
                 value: "Autre / Je ne sais pas"
               },
+              { label: "AXA", value: "AXA" },
+              { label: "MACIF", value: "MACIF" },
+              { label: "MATMUT", value: "MATMUT" },
               { label: "ACM", value: "ACM" },
               { label: "ACTIV ASSURANCE", value: "ACTIV ASSURANCE" },
               { label: "AGPM", value: "AGPM" },
@@ -121,7 +124,6 @@ export default function VehiculePage() {
               { label: "AVANSSUR", value: "AVANSSUR" },
               { label: "AVIVA", value: "AVIVA" },
               { label: "AVIVA/ABEILLE ASSU", value: "AVIVA/ABEILLE ASSU" },
-              { label: "AXA", value: "AXA" },
               { label: "AXA PARTENAIRE", value: "AXA PARTENAIRE" },
               { label: "BANQUE POPULAIRE", value: "BANQUE POPULAIRE" },
               { label: "BLABLASUR", value: "BLABLASUR" },
@@ -164,13 +166,11 @@ export default function VehiculePage() {
               { label: "LIBEA ASSURANCE", value: "LIBEA ASSURANCE" },
               { label: "LSA COURTAGE", value: "LSA COURTAGE" },
               { label: "MAAF", value: "MAAF" },
-              { label: "MACIF", value: "MACIF" },
               { label: "MACIF FILIA", value: "MACIF FILIA" },
               { label: "MACSF", value: "MACSF" },
               { label: "MAIF", value: "MAIF" },
               { label: "MAPA", value: "MAPA" },
               { label: "MARSH", value: "MARSH" },
-              { label: "MATMUT", value: "MATMUT" },
               { label: "MAXANCE", value: "MAXANCE" },
               { label: "MEDICALE DE France", value: "MEDICALE DE France" },
               { label: "MFA", value: "MFA" },
@@ -226,12 +226,12 @@ export default function VehiculePage() {
             <div className=''>
               <SectionMessage type='secondary' className='mx-[8.3rem] my-8 justify-center py-2 rounded-md'>
                 <Image
-                  className="w-6 h-5 mr-2 -ml-1"
+                  className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
                   priority
                   src={GreenCheck}
                   alt="Green check"
                 />
-                <p className='text-s font-light'>Rien à payer{data.assurance != "Autre / Je ne sais pas" && ", franchise offerte"} *</p>
+                <p className='text-sm font-light'>Rien à payer{data.assurance != "Autre / Je ne sais pas" && ". Assurance compatible, franchise offerte"} *</p>
               </SectionMessage>
             </div>
           </div>
@@ -279,12 +279,12 @@ export default function VehiculePage() {
               <div className='flex'>
                 <SectionMessage type='secondary' justify={false}>
                   <Image
-                    className="w-6 h-5 mr-2 -ml-1"
+                    className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
                     priority
                     src={GreenCheck}
                     alt="Green Check"
                   />
-                  <p className='text-s font-light'>Pare-brise en stock</p>
+                  <p className='text-sm font-light'>Votre vitrage est <span className='font-black'>disponible en stock</span></p>
                 </SectionMessage>
               </div>
             </div>

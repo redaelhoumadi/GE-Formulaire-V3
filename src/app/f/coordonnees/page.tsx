@@ -28,6 +28,8 @@ import PhoneInput from '@/components/atoms/Forms/PhoneInput';
 import { useState } from 'react';
 import SectionMessage from '@/components/atoms/SectionMessage';
 import handleScroll from '@/helpers/scroll-into';
+import { useEffect } from "react";
+import { useRecapLiveStore } from "@/store/recap-live";
 
 export default function CoordonneesPage() {
 
@@ -76,6 +78,17 @@ export default function CoordonneesPage() {
     if (!toggle) setTimeout(handleScroll('informationsFacultatives'), 200);
     setToggle(!toggle);
   }
+
+  const setDraft = useRecapLiveStore((s) => s.setDraft);
+
+useEffect(() => {
+  setDraft(4, {
+    nom_prenom: data?.nom_prenom || "",
+    telephone: data?.telephone || "",
+    email: data?.email || "",
+    ville: data?.ville || "",
+  });
+}, [data?.nom_prenom, data?.telephone, data?.email, data?.ville]);
 
   return (
     <form id="coordonnees-form" onSubmit={(e) => { e.preventDefault(); handleSubmit(onSubmit)(e) }}>

@@ -13,6 +13,8 @@ import ImageHeader from "@/components/atoms/ImageHeader";
 import Card from "@/components/atoms/Card";
 import SectionHeader from "@/components/atoms/SectionHeader";
 import Image from "next/image";
+import Chronometre from '@public/images/reusable/chronometre.png';
+import RecapitulatifLive from "@/components/atoms/RecapitulatifLive";
 
 const mapPaths = new Map([
     ["/f/diagnostic", {
@@ -122,24 +124,29 @@ export default function Layout({ children }: any) {
                             </div>
                         </div>
 
-                        <div className="xl:mt-4 xl:mx-4 xl:top-0 xl:basis-1/4 flex-col gap-2 flex">
-                        <Card className="sticky top-[8rem] my-0 mb-4">
-                            <SectionHeader className='mt-5 mb-12'>
-                                      Récapitulatif
-                                    </SectionHeader>
-                        </Card>
+                        <div className="xl:mt-4 xl:mx-4 xl:top-0 xl:basis-1/4 flex-col gap-2 hidden xl:flex sticky top-[8rem]">
+                        <RecapitulatifLive />
+                    
                             {/*<ImageHeader
                                 srcMobile={activeStep?.headerImgMobileSrc}
                                 srcDesktop={activeStep?.headerImgDesktopSrc}
                             />*/}
-                            <div className="sticky top-[18rem] my-0">
+                            
+                            <div className='flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4'>
+                        <Image
+                        className='w-14 h-18'
+                        src={Chronometre}
+                        alt='Chronometre'/>
+                        <span className='font-extrabold text-ge-gray-1 text-xl/4'>Prenez Rendez-vous <br></br>en <span className="underline text-3xl italic decoration-red-500">2 minutes !</span></span>
+                        </div>
+                            {/*<div className="sticky top-[20rem] my-0">
                                 <Image 
                             src="/images/reusable/Google-Ratings.png"
                             alt="Description de l'image"
                             width={500}
                             height={300}
                             priority
-                            /></div>
+                            /></div>*/}
                             
                         </div>
                     </div>

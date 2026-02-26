@@ -28,6 +28,7 @@ import ClickableCarInput from '@/components/atoms/Forms/ClickableCarInput';
 import useStore from '@/store/useStore';
 import { useEffect } from 'react';
 import ClickableCarPcInput from '@/components/atoms/Forms/ClickableCarPcInput';
+import { useRecapLiveStore } from "@/store/recap-live";
 
 
 export default function DiagnosticPage() {
@@ -42,6 +43,16 @@ export default function DiagnosticPage() {
     mode: "onChange"
   })
   const data = watch();
+
+
+  const setDraft = useRecapLiveStore((s) => s.setDraft);
+
+useEffect(() => {
+  setDraft(1, {
+    vitrage: data?.vitrage || "",
+    ...(data?.vitrage === "Pare-Brise" ? { dommage: data?.dommage || "" } : {}),
+  });
+}, [data?.vitrage, data?.dommage]);
 
   // effect runs when user state is updated
   useEffect(() => {

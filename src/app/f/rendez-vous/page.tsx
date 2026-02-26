@@ -29,6 +29,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import DateInput from '@/components/atoms/Forms/DateInput';
 import AutoCompleteInput from '@/components/atoms/Forms/AutoCompleteInput';
 import { useState } from 'react';
+import { useEffect } from "react";
+import { useRecapLiveStore } from "@/store/recap-live";
 
 export default function RendezVousPage() {
 
@@ -54,6 +56,24 @@ export default function RendezVousPage() {
   };
   const formIsValid = isValid && (watchData.date_souhaitee || unknownCalendar);
 
+  const setDraft = useRecapLiveStore((s) => s.setDraft);
+
+useEffect(() => {
+  setDraft(3, {
+    type: watchData?.type || "",
+    adresse: watchData?.adresse || "",
+    ville: watchData?.ville || "",
+    date_souhaitee: watchData?.date_souhaitee || null,
+    creneau: watchData?.creneau || "",
+  });
+}, [
+  watchData?.type,
+  watchData?.adresse,
+  watchData?.ville,
+  watchData?.date_souhaitee,
+  watchData?.creneau,
+]);
+
   return (
     <form id="rendez-vous-form" onSubmit={handleSubmit(onSubmit)}>
       {/* TYPE D'INTERVENTION SOUHAITEE */}
@@ -64,7 +84,7 @@ export default function RendezVousPage() {
 
         <div id="formRdvIntervention"></div>
 
-        <div onClick={handleScroll('formRdvIntervention')} className='px-[7.5rem]'>
+        <div onClick={handleScroll('formRdvIntervention')} className='px-[4.5rem]'>
           <InterventionTypeSelect
             control={control}
           />

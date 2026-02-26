@@ -53,6 +53,7 @@ export default function NavBar(props: NavBarProps) {
 
             <nav className="hidden xl:block bg-white fixed w-full z-20 top-0 left-0">
                 <div className="max-w-screen-xl flex font-light flex-wrap items-center justify-center mx-auto xl:container p-4 xl:px-52">
+                    
                     <div className="grid grid-cols-4 gap-2 text-ge-gray-3">
                         <div className={` ${stepNo && stepNo > 0 ? (stepNo && stepNo == 1 ? 'text-ge-green font-bold' :'opacity-50 text-ge-green') : 'text-ge-gray-1'}`}>
                             <h1 className="text-center text-md mx-12 my-2">Diagnostic</h1>

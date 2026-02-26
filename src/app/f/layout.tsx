@@ -115,42 +115,31 @@ export default function Layout({ children }: any) {
                 />
                 }
                 <div className="xl:mx-auto xl:max-w-7xl">
-                    {/* <div className="xl:mx-24"> */}
-                    <div className="mt-14 xl:mt-0 xl:flex xl:flex-row xl:gap-3 flex-col-reverse flex xl:block">
-                        
-                        <div className="xl:basis-3/4">
-                            <div className="xl:container mx-5 xl:mx-auto">
-                                {children}
-                            </div>
-                        </div>
+  <div className="mt-14 xl:mt-0 xl:grid xl:grid-cols-4 xl:gap-3">
+    <div className="xl:col-span-3 order-2 xl:order-1">
+      <div className="xl:container mx-5 xl:mx-auto">
+        {children}
+      </div>
+    </div>
 
-                        <div className="xl:mt-4 xl:mx-4 xl:top-0 xl:basis-1/4 flex-col gap-2 hidden xl:flex sticky top-[8rem]">
-                        <RecapitulatifLive />
-                    
-                            {/*<ImageHeader
-                                srcMobile={activeStep?.headerImgMobileSrc}
-                                srcDesktop={activeStep?.headerImgDesktopSrc}
-                            />*/}
-                            
-                            <div className='flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4'>
-                        <Image
-                        className='w-14 h-18'
-                        src={Chronometre}
-                        alt='Chronometre'/>
-                        <span className='font-extrabold text-ge-gray-1 text-xl/4'>Prenez Rendez-vous <br></br>en <span className="underline text-3xl italic decoration-red-500">2 minutes !</span></span>
-                        </div>
-                            {/*<div className="sticky top-[20rem] my-0">
-                                <Image 
-                            src="/images/reusable/Google-Ratings.png"
-                            alt="Description de l'image"
-                            width={500}
-                            height={300}
-                            priority
-                            /></div>*/}
-                            
-                        </div>
-                    </div>
-                </div>
+    <aside className="hidden xl:block xl:col-span-1 order-1 xl:order-2">
+      <div className="sticky top-[8rem] flex flex-col gap-6 xl:mt-4 xl:mx-4">
+        <RecapitulatifLive />
+
+        <div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
+          <Image className="w-14 h-18" src={Chronometre} alt="Chronometre" />
+          <span className="font-extrabold text-ge-gray-1 text-xl/4">
+            Prenez Rendez-vous <br />
+            en{" "}
+            <span className="underline text-3xl italic decoration-red-500">
+              2 minutes !
+            </span>
+          </span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
             </div>
 
         </main>)

@@ -18,13 +18,34 @@ function formatPhone(phone?: string) {
   return phone.replace(/^0/, "+33");
 }
 
-function Row({ label, value }: { label: string; value?: string }) {
+function isFilled(v?: string) {
+  return !!v && v.trim() !== "";
+}
+
+function Row({
+  label,
+  value,
+  /*showCheck = true,*/
+}: {
+  label: string;
+  value?: string;
+  showCheck?: boolean;
+}) {
+  if (!isFilled(value)) return null;
+
   return (
-    <div className="flex items-start justify-between gap-3 py-1">
+    <div className="flex items-center justify-between gap-3 py-1">
       <span className="text-xs text-ge-gray-3">{label}</span>
-      <span className="text-xs text-ge-gray-1 font-bold text-right">
-        {value && value.trim() !== "" ? value : "—"}
-      </span>
+
+      <div className="text-right">
+        <span className="text-xs text-ge-gray-1 font-bold">{value}</span>
+
+        {/*{showCheck && (
+          <div className="mt-1 inline-flex items-center gap-1 text-[11px] font-bold text-ge-green">
+            <span>✅</span>
+          </div>
+        )}*/}
+      </div>
     </div>
   );
 }
@@ -42,54 +63,96 @@ export default function RecapitulatifLive() {
   const stepRendezVous = live.stepRendezVous ?? store.stepRendezVous ?? {};
   const stepCoordonnees = live.stepCoordonnees ?? store.stepCoordonnees ?? {};
 
-  const rdvLine = [
-    stepRendezVous?.type ? stepRendezVous.type : "",
-    stepRendezVous?.adresse ? stepRendezVous.adresse : "",
-    stepRendezVous?.ville ? stepRendezVous.ville : "",
-  ]
-    .filter(Boolean)
-    .join(" • ");
+  // ---- Diagnostic
+  const showDiagnostic =
+    isFilled(stepDiagnostic?.vitrage) ||
+    (stepDiagnostic?.vitrage === "Pare-Brise" && isFilled(stepDiagnostic?.dommage));
 
-  const dateLine = [
-    formatDate(stepRendezVous?.date_souhaitee),
-    stepRendezVous?.creneau ? String(stepRendezVous.creneau).toLowerCase() : "",
-  ]
-    .filter(Boolean)
-    .join(", ");
+  // ---- Véhicule
+  const showVehicule =
+    isFilled(stepVehicule?.assurance) ||
+    isFilled(stepVehicule?.immatriculation) ||
+    isFilled(stepVehicule?.marque_modele_vehicule);
+
+  // ---- RDV
+  const rdvType = stepRendezVous?.type ? String(stepRendezVous.type) : "";
+  const rdvAdresse = stepRendezVous?.adresse ? String(stepRendezVous.adresse) : "";
+  const rdvVille = stepRendezVous?.ville ? String(stepRendezVous.ville) : "";
+  const rdvDate = formatDate(stepRendezVous?.date_souhaitee);
+  const rdvCreneau = stepRendezVous?.creneau ? String(stepRendezVous.creneau) : "";
+
+  const showRdv =
+    isFilled(rdvType) || isFilled(rdvAdresse) || isFilled(rdvVille) || isFilled(rdvDate) || isFilled(rdvCreneau);
+
+  // ---- Coordonnées
+  const coordNom = stepCoordonnees?.nom_prenom ? String(stepCoordonnees.nom_prenom) : "";
+  const coordTel = formatPhone(stepCoordonnees?.telephone);
+  const coordEmail = stepCoordonnees?.email ? String(stepCoordonnees.email) : "";
+
+  const showCoord = isFilled(coordNom) || isFilled(coordTel) || isFilled(coordEmail);
+
+  // Si rien n’est encore rempli
+  const showAnything = showDiagnostic || showVehicule || showRdv || showCoord;
 
   return (
-    <div className="bg-white rounded-md px-4 py-4">
-      <div className="border-l-8 border-ge-yellow pl-2 font-extrabold text-ge-gray-1 text-base mb-3">
-        Récapitulatif
+    <div className="bg-white rounded-md px-6 py-6">
+      <div className=" text-xl border-l-8 border-ge-yellow pl-2 font-extrabold text-ge-gray-1 text-base mb-3">
+        Récapitulatif de votre rendez-vous
       </div>
 
-      <div className="divide-y divide-ge-gray-4">
-        <div className="py-2">
-          <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Diagnostic</div>
-          <Row label="Vitrage" value={stepDiagnostic?.vitrage} />
-          <Row label="Dommage" value={stepDiagnostic?.dommage} />
-        </div>
+      {!showAnything && (
+        <p className="text-sm text-ge-gray-3">
+          Vos choix s’afficheront ici au fur et à mesure
+        </p>
+      )}
 
-        <div className="py-2">
-          <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Véhicule</div>
-          <Row label="Assurance" value={stepVehicule?.assurance} />
-          <Row label="Immatriculation" value={stepVehicule?.immatriculation} />
-          <Row label="Modèle" value={stepVehicule?.marque_modele_vehicule} />
-        </div>
+      {showAnything && (
+        <div className="divide-y divide-ge-gray-4">
+          {/* DIAGNOSTIC */}
+          {showDiagnostic && (
+            <div className="py-2">
+              <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Diagnostic</div>
+              <Row label="Vitrage" value={stepDiagnostic?.vitrage} />
+              {stepDiagnostic?.vitrage === "Pare-Brise" && (
+                <Row label="Dommage" value={stepDiagnostic?.dommage} />
+              )}
+            </div>
+          )}
 
-        <div className="py-2">
-          <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Rendez-vous</div>
-          <Row label="Infos" value={rdvLine} />
-          <Row label="Date" value={dateLine} />
-        </div>
+          {/* VEHICULE */}
+          {showVehicule && (
+            <div className="py-2">
+              <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Véhicule</div>
+              <Row label="Assurance" value={stepVehicule?.assurance} />
+              <Row label="Immatriculation" value={stepVehicule?.immatriculation} />
+              <Row label="Modèle" value={stepVehicule?.marque_modele_vehicule} />
+            </div>
+          )}
 
-        <div className="py-2">
-          <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Coordonnées</div>
-          <Row label="Nom" value={stepCoordonnees?.nom_prenom} />
-          <Row label="Téléphone" value={formatPhone(stepCoordonnees?.telephone)} />
-          <Row label="Email" value={stepCoordonnees?.email} />
+          {/* RENDEZ-VOUS */}
+          {showRdv && (
+            <div className="py-2">
+              <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Rendez-vous</div>
+              <Row label="Intervention" value={rdvType} />
+              {/* On affiche l’adresse OU la ville selon le type (si renseigné) */}
+              <Row label="Adresse" value={rdvAdresse} />
+              <Row label="Ville" value={rdvVille} />
+              <Row label="Date" value={rdvDate} />
+              <Row label="Créneau" value={rdvCreneau ? rdvCreneau.toLowerCase() : ""} />
+            </div>
+          )}
+
+          {/* COORDONNEES */}
+          {showCoord && (
+            <div className="py-2">
+              <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Coordonnées</div>
+              <Row label="Nom" value={coordNom} />
+              <Row label="Téléphone" value={coordTel} />
+              <Row label="Email" value={coordEmail} showCheck={!!coordEmail} />
+            </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -128,10 +128,10 @@ export default function Layout({ children }: any) {
 
         <div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
           <Image className="w-14 h-18" src={Chronometre} alt="Chronometre" />
-          <span className="font-extrabold text-ge-gray-1 text-xl/4">
+          <span className="font-extrabold text-ge-gray-1 text-l/4">
             Prenez Rendez-vous <br />
             en{" "}
-            <span className="underline text-3xl italic decoration-red-500">
+            <span className="underline text-2xl italic decoration-red-500">
               2 minutes !
             </span>
           </span>

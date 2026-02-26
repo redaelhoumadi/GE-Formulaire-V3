@@ -98,6 +98,11 @@ export default function Layout({ children }: any) {
         };
     }, []); */
 
+    const stepDiagnostic = useStore(useFormStore, (state) => state.stepDiagnostic);
+
+// show aside seulement si l'utilisateur a fait le choix du début
+const showAside = Boolean(stepDiagnostic);
+
 
     if ((activeStep && activeStep.stepNo != 1) && (maxStep == -1 || (activeStep && activeStep.stepNo > maxStep + 1))) {
         redirect('/f/diagnostic');
@@ -114,30 +119,44 @@ export default function Layout({ children }: any) {
                     title={activeStep?.title}
                 />
                 }
-                <div className="xl:mx-auto xl:max-w-7xl">
-  <div className="mt-14 xl:mt-0 xl:grid xl:grid-cols-4 xl:gap-3">
-    <div className="xl:col-span-3 order-2 xl:order-1">
+                <div className={`xl:mx-auto ${
+      showAside ? "xl:max-w-7xl" : "xl:max-w-5xl"
+    }`}>
+  <div
+    className={`mt-14 xl:mt-0 xl:grid xl:gap-6 ${
+      showAside ? "xl:grid-cols-4" : "xl:grid-cols-1"
+    }`}
+  >
+    {/* MAIN CONTENT */}
+    <div
+      className={`${
+        showAside ? "xl:col-span-3" : "xl:col-span-1"
+      }`}
+    >
       <div className="xl:container mx-5 xl:mx-auto">
         {children}
       </div>
     </div>
 
-    <aside className="hidden xl:block xl:col-span-1 order-1 xl:order-2">
-      <div className="sticky top-[8rem] flex flex-col gap-6 xl:mt-4 xl:mx-4">
-        <RecapitulatifLive />
+    {/* ASIDE */}
+    {showAside && (
+      <aside className="hidden xl:block xl:col-span-1">
+        <div className="sticky top-[8rem] flex flex-col gap-6 xl:mt-4 xl:mx-4">
+          <RecapitulatifLive />
 
-        <div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
-          <Image className="w-14 h-18" src={Chronometre} alt="Chronometre" />
-          <span className="font-extrabold text-ge-gray-1 text-l/4">
-            Prenez Rendez-vous <br />
-            en{" "}
-            <span className="underline text-2xl italic decoration-red-500">
-              2 minutes !
+          <div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
+            <Image className="w-14 h-18" src={Chronometre} alt="Chronometre" />
+            <span className="font-extrabold text-ge-gray-1 text-l/4">
+              Prenez Rendez-vous <br />
+              en{" "}
+              <span className="underline text-2xl italic decoration-red-500">
+                2 minutes !
+              </span>
             </span>
-          </span>
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    )}
   </div>
 </div>
             </div>

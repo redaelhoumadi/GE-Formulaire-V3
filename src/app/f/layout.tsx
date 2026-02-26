@@ -9,9 +9,6 @@ import useFormStore from "@/store/form";
 import { redirect } from 'next/navigation'
 import useStore from "@/store/useStore";
 import ScrollUp from "@/components/atoms/ScrollUp";
-import ImageHeader from "@/components/atoms/ImageHeader";
-import Card from "@/components/atoms/Card";
-import SectionHeader from "@/components/atoms/SectionHeader";
 import Image from "next/image";
 import Chronometre from '@public/images/reusable/chronometre.png';
 import RecapitulatifLive from "@/components/atoms/RecapitulatifLive";
@@ -101,7 +98,8 @@ export default function Layout({ children }: any) {
     const stepDiagnostic = useStore(useFormStore, (state) => state.stepDiagnostic);
 
 // show aside seulement si l'utilisateur a fait le choix du début
-const showAside = Boolean(stepDiagnostic);
+const showAside =
+  Boolean(stepDiagnostic) && activeStep?.stepNo !== 5;
 
 
     if ((activeStep && activeStep.stepNo != 1) && (maxStep == -1 || (activeStep && activeStep.stepNo > maxStep + 1))) {
@@ -141,7 +139,7 @@ const showAside = Boolean(stepDiagnostic);
     {/* ASIDE */}
     {showAside && (
       <aside className="hidden xl:block xl:col-span-1">
-        <div className="sticky top-[8rem] flex flex-col gap-6 xl:mt-4 xl:mx-4">
+        <div className="sticky top-[8rem] flex flex-col gap-4 xl:mt-4 xl:mx-4">
           <RecapitulatifLive />
 
           <div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
@@ -149,7 +147,7 @@ const showAside = Boolean(stepDiagnostic);
             <span className="font-extrabold text-ge-gray-1 text-l/4">
               Prenez Rendez-vous <br />
               en{" "}
-              <span className="underline text-2xl italic decoration-red-500">
+              <span className="underline font-black text-2xl italic decoration-red-500">
                 2 minutes !
               </span>
             </span>

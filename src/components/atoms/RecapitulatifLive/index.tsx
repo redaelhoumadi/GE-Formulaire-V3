@@ -96,7 +96,7 @@ export default function RecapitulatifLive() {
 
   return (
     <div className="bg-white rounded-md px-6 py-6">
-      <div className=" text-xl border-l-8 border-ge-yellow pl-2 font-extrabold text-ge-gray-1 text-base mb-3">
+      <div className=" text-xl border-l-8 border-ge-yellow pl-2 font-extrabold text-ge-gray-1 text-base mb-5">
         Récapitulatif de votre rendez-vous
       </div>
 

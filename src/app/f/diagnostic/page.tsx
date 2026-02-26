@@ -141,14 +141,14 @@ useEffect(() => {
           </div>
 
           {/* MESSAGE A LA FIN */}
-          <SectionMessage type='secondary' justify={false} className='mx-20 my-8 justify-center py-2 rounded-md'>
+          <SectionMessage type='secondary' justify={false} className='xl:mx-20 my-8 justify-center py-2 rounded-md'>
             <Image
               className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
               priority
               src={GreenCheck}
               alt="Green check"
             />
-            <p className='text-sm font-light'>Temps moyen d&apos;intervention : <span className='font-black'>1 heure</span></p>
+            <p className='xl:text-sm text-xs font-light'>Temps moyen d&apos;intervention : <span className='font-black'>1 heure</span></p>
           </SectionMessage>
         </Card>
       }

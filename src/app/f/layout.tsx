@@ -9,6 +9,9 @@ import useFormStore from "@/store/form";
 import { redirect } from 'next/navigation'
 import useStore from "@/store/useStore";
 import ScrollUp from "@/components/atoms/ScrollUp";
+import ImageHeader from "@/components/atoms/ImageHeader";
+import Card from "@/components/atoms/Card";
+import SectionHeader from "@/components/atoms/SectionHeader";
 import Image from "next/image";
 import Chronometre from '@public/images/reusable/chronometre.png';
 import RecapitulatifLive from "@/components/atoms/RecapitulatifLive";
@@ -117,11 +120,13 @@ const showAside =
                     title={activeStep?.title}
                 />
                 }
+                
                 <div className={`xl:mx-auto ${
       showAside ? "xl:max-w-7xl" : "xl:max-w-5xl"
     }`}>
+      
   <div
-    className={`mt-14 xl:mt-0 xl:grid xl:gap-6 ${
+    className={`mt-14 xl:mt-0 flex flex-col-reverse xl:grid xl:gap-6 ${
       showAside ? "xl:grid-cols-4" : "xl:grid-cols-1"
     }`}
   >
@@ -143,7 +148,7 @@ const showAside =
           <RecapitulatifLive />
 
           <div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
-            <Image className="w-14 h-18" src={Chronometre} alt="Chronometre" />
+            <Image className="w-16 h-18" src={Chronometre} alt="Chronometre" />
             <span className="font-extrabold text-ge-gray-1 text-l/4">
               Prenez Rendez-vous <br />
               en{" "}
@@ -155,6 +160,12 @@ const showAside =
         </div>
       </aside>
     )}
+    <div className="xl:hidden">
+      <ImageHeader
+                                srcMobile={activeStep?.headerImgMobileSrc}
+                                srcDesktop={activeStep?.headerImgDesktopSrc}
+                            />
+    </div>
   </div>
 </div>
             </div>

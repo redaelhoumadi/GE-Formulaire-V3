@@ -358,14 +358,14 @@ useEffect(() => {
           {data.assurance && (
             <div className="">
               <div className="">
-                <SectionMessage type="secondary" className="mx-[8.3rem] my-8 justify-center py-2 rounded-md">
+                <SectionMessage type="secondary" className="xl:mx-[8.3rem] my-8 justify-center py-2 rounded-md">
                   <Image
                     className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
                     priority
                     src={GreenCheck}
                     alt="Green check"
                   />
-                  <p className="text-sm font-light">
+                  <p className="xl:text-sm text-xs font-light">
                     <span className="font-black">Rien à payer</span>
                     {data.assurance != "Autre / Je ne sais pas" && ". Assurance compatible, franchise offerte"} *
                   </p>
@@ -420,7 +420,7 @@ useEffect(() => {
                           src={GreenCheck}
                           alt="Green Check"
                         />
-                        <p className="text-sm font-light">
+                        <p className="xl:text-sm text-xs font-light">
                           Votre vitrage est <span className="font-black">disponible en stock</span>
                         </p>
                       </SectionMessage>

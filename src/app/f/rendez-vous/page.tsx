@@ -84,7 +84,7 @@ useEffect(() => {
 
         <div id="formRdvIntervention"></div>
 
-        <div onClick={handleScroll('formRdvIntervention')} className='px-[4.5rem]'>
+        <div onClick={handleScroll('formRdvIntervention')} className='xl:px-[11.8rem]'>
           <InterventionTypeSelect
             control={control}
           />
@@ -113,7 +113,7 @@ useEffect(() => {
                 src={GreenCheck}
                 alt="Green check"
               />
-              <p className='text-sm font-light'><span className='font-black'>Service gratuit</span> où vous le souhaitez</p>
+              <p className='xl:text-sm text-xs font-light'><span className='font-black'>Service gratuit</span> où vous le souhaitez</p>
             </SectionMessage>
           </>
         }
@@ -131,14 +131,14 @@ useEffect(() => {
                 fullWidth
               />
             </div>
-            <SectionMessage type='secondary' className='mx-4 my-4 justify-center' justify={false}>
+            <SectionMessage type='secondary' className=' my-4 justify-center' justify={false}>
               <Image
                 className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
                 priority
                 src={GreenCheck}
                 alt="Green check"
               />
-              <p className='text-sm font-light'><span className='font-black'>Un véhicule de prêt</span> vous sera proposé <span className='font-black'>gratuitement</span></p>
+              <p className='xl:text-sm text-xs font-light'><span className='font-black'>Un véhicule de prêt</span> vous sera proposé <span className='font-black'>gratuitement</span></p>
             </SectionMessage>
           </>
         }
@@ -193,7 +193,7 @@ useEffect(() => {
             src={GreenCheck}
             alt="Green check"
           />
-          <p className='text-sm font-light'>Un horaire précis vous sera communiqué par <span className='font-black'>téléphone</span></p>
+          <p className='xl:text-sm text-xs font-light'>Un horaire précis vous sera communiqué par <span className='font-black'>téléphone</span></p>
         </SectionMessage>
         }
 

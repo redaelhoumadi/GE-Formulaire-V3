@@ -51,7 +51,7 @@ const gridColsVariants = [
     'md:grid-cols-4',
 ]
 
-export default function ButtonSelectionInput(props: ButtonSelectionInputProps) {
+export default function   ButtonSelectionInput(props: ButtonSelectionInputProps) {
     const { options, control, name, label, onClick = () => { }, style = 'default' } = props;
 
     let styleProps = style == 'stretch' ? `md:grid ${gridColsVariants[options.length]} md:gap-8` : '';

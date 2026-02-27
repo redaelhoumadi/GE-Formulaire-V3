@@ -411,12 +411,7 @@ useEffect(() => {
                   <div>
                     <div className="flex">
                       <SectionMessage type="secondary" justify={false}>
-                        <Image
-                          className="w-6 h-5 mr-2 -ml-1 bg-green-200 rounded-md p-0.5"
-                          priority
-                          src={GreenCheck}
-                          alt="Green Check"
-                        />
+                        
                         <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
                         <p className="xl:text-sm text-xs font-light">
                           Votre vitrage est <span className="font-black">disponible en stock</span>

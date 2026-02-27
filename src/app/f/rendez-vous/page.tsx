@@ -85,7 +85,7 @@ useEffect(() => {
 
         <div id="formRdvIntervention"></div>
 
-        <div onClick={handleScroll('formRdvIntervention')} className='xl:px-[11.8rem]'>
+        <div onClick={handleScroll('formRdvIntervention')} className='xl:px-[11rem]'>
           <InterventionTypeSelect
             control={control}
           />

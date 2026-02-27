@@ -10,12 +10,9 @@ import { redirect } from 'next/navigation'
 import useStore from "@/store/useStore";
 import ScrollUp from "@/components/atoms/ScrollUp";
 import ImageHeader from "@/components/atoms/ImageHeader";
-import Card from "@/components/atoms/Card";
-import SectionHeader from "@/components/atoms/SectionHeader";
-import Image from "next/image";
-import Chronometre from '@public/images/reusable/chronometre.png';
-import RecapitulatifLive from "@/components/atoms/RecapitulatifLive";
-import RecapInterventionCard from "@/components/atoms/RecapitulatifLive"
+import RecapInterventionCard from "@/components/atoms/RecapitulatifLive";
+
+
 
 const mapPaths = new Map([
     ["/f/diagnostic", {
@@ -122,31 +119,23 @@ const showAside =
                 />
                 }
                 
-                <div className={`xl:mx-auto ${
-      showAside ? "xl:max-w-7xl" : "xl:max-w-5xl"
-    }`}>
+                <div className="xl:mx-auto xl:max-w-7xl">
       
   <div
-    className={`mt-14 xl:mt-0 flex flex-col-reverse xl:grid xl:gap-6 ${
-      showAside ? "xl:grid-cols-4" : "xl:grid-cols-1"
-    }`}
+    className="mt-14 xl:mt-0 xl:flex xl:flex-row xl:gap-3"
   >
     {/* MAIN CONTENT */}
-    <div
-      className={`${
-        showAside ? "xl:col-span-3" : "xl:col-span-1"
-      }`}
-    >
+    <div className="xl:basis-3/4">
       <div className="xl:container mx-5 xl:mx-auto">
         {children}
       </div>
     </div>
 
     {/* ASIDE */}
-    {showAside && (
-      <aside className="hidden xl:block xl:col-span-1">
-        <div className="sticky top-[8rem] flex flex-col gap-4 xl:mt-4 xl:mx-4">
-          <RecapInterventionCard />
+    
+      <aside className="xl:mt-4 xl:mx-4 xl:top-0 xl:basis-1/4 xl:px-1 ">
+        <div className="sticky top-[8rem] flex flex-col gap-4">
+          {showAside &&<RecapInterventionCard />}
 
           {/*<div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
             <Image className="w-16 h-18" src={Chronometre} alt="Chronometre" />
@@ -167,7 +156,7 @@ const showAside =
           
         </div>
       </aside>
-    )}
+    
     
   </div>
 </div>

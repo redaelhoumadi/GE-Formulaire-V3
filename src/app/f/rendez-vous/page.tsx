@@ -22,6 +22,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from "react-hook-form";
 import InterventionTypeSelect from '@/components/molecules/Forms/InterventionTypeSelect';
 import HoraireSelect from '@/components/molecules/Forms/HoraireSelect';
+import { CheckCircle2 } from "lucide-react";
 
 // Form validation
 import { StepRendezVousSchema } from '@/helpers/validation';
@@ -106,13 +107,8 @@ useEffect(() => {
                 onClick={handleScroll('formRdvDateIntervention')}
               />
             </div>
-            <SectionMessage type='secondary' className='mx-4 my-4 justify-center' justify={false}>
-              <Image
-                className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
-                priority
-                src={GreenCheck}
-                alt="Green check"
-              />
+            <SectionMessage type='secondary' className='mx-4 gap-1 my-4 justify-center' justify={false}>
+              <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
               <p className='xl:text-sm text-xs font-light'><span className='font-black'>Service gratuit</span> où vous le souhaitez</p>
             </SectionMessage>
           </>
@@ -131,13 +127,8 @@ useEffect(() => {
                 fullWidth
               />
             </div>
-            <SectionMessage type='secondary' className=' my-4 justify-center' justify={false}>
-              <Image
-                className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
-                priority
-                src={GreenCheck}
-                alt="Green check"
-              />
+            <SectionMessage type='secondary' className='gap-1 my-4 justify-center' justify={false}>
+              <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
               <p className='xl:text-sm text-xs font-light'><span className='font-black'>Un véhicule de prêt</span> vous sera proposé <span className='font-black'>gratuitement</span></p>
             </SectionMessage>
           </>
@@ -186,13 +177,8 @@ useEffect(() => {
           />
         </p>
 
-        {watchData.creneau && <SectionMessage type='secondary' className='justify-center py-2' justify={false}>
-          <Image
-            className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
-            priority
-            src={GreenCheck}
-            alt="Green check"
-          />
+        {watchData.creneau && <SectionMessage type='secondary' className='gap-1 justify-center py-2' justify={false}>
+          <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
           <p className='xl:text-sm text-xs font-light'>Un horaire précis vous sera communiqué par <span className='font-black'>téléphone</span></p>
         </SectionMessage>
         }

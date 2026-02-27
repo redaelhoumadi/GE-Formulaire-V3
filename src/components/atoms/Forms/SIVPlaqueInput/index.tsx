@@ -73,7 +73,7 @@ export default function SIVPlaqueInput(props: SIVPlaqueInputProps) {
                 </div>
                 <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
                     <Image
-                        className="w-10 h-12 text-gray-500 rounded-md"
+                        className="w-10 h-12 text-gray-500 rounded-l-md"
                         priority
                         src={SIVPlaquePC}
                         alt="SIVPlaquePC"

@@ -21,6 +21,7 @@ import SIVPlaqueInput from "@/components/atoms/Forms/SIVPlaqueInput";
 import Card from "@/components/atoms/Card";
 import ModeleVehiculeCard from "@/components/atoms/ModeleVehiculeCard";
 import ImmatriculationVehiculeCard from "@/components/atoms/ImmatriculationVehiculeCard";
+import { CheckCircle2 } from "lucide-react";
 
 import { StepVehiculeSchema } from "@/helpers/validation";
 import useFormStore, { FormState } from "@/store/form";
@@ -32,10 +33,10 @@ import { useRecapLiveStore } from "@/store/recap-live";
  * Mapping assurance -> logo (public/)
  */
 const assuranceLogos: Record<string, string> = {
-  AXA: "/images/components/assurances/axa.png",
-  MACIF: "/images/components/assurances/macif.png",
-  MATMUT: "/images/components/assurances/matmut.png",
-  ACM: "/images/components/assurances/acm.png",
+  AXA: "/images/components/assurances/Axa.png",
+  MACIF: "/images/components/assurances/MAcif.png",
+  MATMUT: "/images/components/assurances/MAtmut.png",
+  ACM: "/images/components/assurances/ACM.png",
   "ACTIV ASSURANCE" : "/images/components/assurances/Activ-Assurances.png",
   AGPM: "/images/components/assurances/AGPM.png",
   "AIR ALPHA":"/images/components/assurances/Air-Alpha.png",
@@ -44,7 +45,7 @@ const assuranceLogos: Record<string, string> = {
   ALTIMA: "/images/components/assurances/Altima.png",
   "AMALINE/AMAGUIZ" : "/images/components/assurances/Amaline--Amaguiz.png",
   AMV: "/images/components/assurances/AMV.png",
-  ANGELUS: "/images/components/assurances/ANGELUS.png",
+  ANGELUS: "/images/components/assurances/Angelus.png",
   AON: "/images/components/assurances/AON.png",
   "APRIL MON ASSURANCE": "/images/components/assurances/April.png",
   "APRIL PARTENAIRE": "/images/components/assurances/April.png",
@@ -358,13 +359,9 @@ useEffect(() => {
           {data.assurance && (
             <div className="">
               <div className="">
-                <SectionMessage type="secondary" className="xl:mx-[8.3rem] my-8 justify-center py-2 rounded-md">
-                  <Image
-                    className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
-                    priority
-                    src={GreenCheck}
-                    alt="Green check"
-                  />
+                <SectionMessage type="secondary" className="xl:mx-[8.3rem] my-8 gap-1 justify-center py-2 rounded-md">
+                  
+                  <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
                   <p className="xl:text-sm text-xs font-light">
                     <span className="font-black">Rien à payer</span>
                     {data.assurance != "Autre / Je ne sais pas" && ". Assurance compatible, franchise offerte"} *
@@ -410,16 +407,17 @@ useEffect(() => {
 
               {/* MESSAGE INFOS VEHICULE */}
               {vehicule && (
-                <div className="flex mb-3 xl:mb-6">
+                <div className="flex mb-3 xl:mb-6 justify-center">
                   <div>
                     <div className="flex">
                       <SectionMessage type="secondary" justify={false}>
                         <Image
-                          className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
+                          className="w-6 h-5 mr-2 -ml-1 bg-green-200 rounded-md p-0.5"
                           priority
                           src={GreenCheck}
                           alt="Green Check"
                         />
+                        <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
                         <p className="xl:text-sm text-xs font-light">
                           Votre vitrage est <span className="font-black">disponible en stock</span>
                         </p>

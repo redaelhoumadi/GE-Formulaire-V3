@@ -15,6 +15,7 @@ import SectionHeader from "@/components/atoms/SectionHeader";
 import Image from "next/image";
 import Chronometre from '@public/images/reusable/chronometre.png';
 import RecapitulatifLive from "@/components/atoms/RecapitulatifLive";
+import RecapInterventionCard from "@/components/atoms/RecapitulatifLive"
 
 const mapPaths = new Map([
     ["/f/diagnostic", {
@@ -145,9 +146,9 @@ const showAside =
     {showAside && (
       <aside className="hidden xl:block xl:col-span-1">
         <div className="sticky top-[8rem] flex flex-col gap-4 xl:mt-4 xl:mx-4">
-          <RecapitulatifLive />
+          <RecapInterventionCard />
 
-          <div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
+          {/*<div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
             <Image className="w-16 h-18" src={Chronometre} alt="Chronometre" />
             <span className="font-extrabold text-ge-gray-1 text-l/4">
               Prenez Rendez-vous <br />
@@ -156,16 +157,18 @@ const showAside =
                 2 minutes !
               </span>
             </span>
-          </div>
-        </div>
-      </aside>
-    )}
-    <div className="xl:hidden">
+          </div>*/}
+          <div className="">
       <ImageHeader
                                 srcMobile={activeStep?.headerImgMobileSrc}
                                 srcDesktop={activeStep?.headerImgDesktopSrc}
                             />
     </div>
+          
+        </div>
+      </aside>
+    )}
+    
   </div>
 </div>
             </div>

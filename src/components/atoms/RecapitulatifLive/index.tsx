@@ -1,158 +1,196 @@
 "use client";
 
+import React, { useMemo } from "react";
 import useFormStore, { FormState } from "@/store/form";
 import { useRecapLiveStore } from "@/store/recap-live";
+import { CheckCircle } from "lucide-react";
+import SectionHeader from "@/components/atoms/SectionHeader";
 
-function formatDate(date: any) {
-  if (!date) return "";
-  const d = new Date(date);
+type RecapItem = {
+  id: string;
+  textParts: Array<{ text: string; bold?: boolean }>;
+};
+
+function toText(v: unknown): string {
+  if (v === null || v === undefined) return "";
+  return String(v).trim();
+}
+
+function isFilled(v: unknown): boolean {
+  return toText(v) !== "";
+}
+
+function formatDateFR(date: unknown) {
+  const raw = toText(date);
+  if (!raw) return "";
+  const d = new Date(raw);
   if (Number.isNaN(d.getTime())) return "";
   const dd = String(d.getDate()).padStart(2, "0");
   const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const yyyy = d.getFullYear();
-  return `${dd}/${mm}/${yyyy}`;
+  return `${dd}/${mm}`;
 }
 
-function formatPhone(phone?: string) {
-  if (!phone) return "";
-  return phone.replace(/^0/, "+33");
+function formatTimeFR(time: unknown) {
+  const t = toText(time);
+  if (!t) return "";
+  if (/^\d{1,2}h\d{2}$/.test(t)) return t;
+  if (/^\d{1,2}:\d{2}$/.test(t)) return t.replace(":", "h");
+  return t;
 }
 
-function isFilled(v?: string) {
-  return !!v && v.trim() !== "";
-}
-
-function Row({
-  label,
-  value,
-  /*showCheck = true,*/
+function InterventionLine({
+  parts,
 }: {
-  label: string;
-  value?: string;
-  showCheck?: boolean;
+  parts: RecapItem["textParts"];
 }) {
-  if (!isFilled(value)) return null;
-
   return (
-    <div className="flex items-center justify-between gap-3 py-1">
-      <span className="text-xs text-ge-gray-3">{label}</span>
-
-      <div className="text-right">
-        <span className="text-xs text-ge-gray-1 font-bold">{value}</span>
-
-        {/*{showCheck && (
-          <div className="mt-1 inline-flex items-center gap-1 text-[11px] font-bold text-ge-green">
-            <span>✅</span>
-          </div>
-        )}*/}
+    <div className="flex items-start gap-2 py-2">
+      <CheckCircle className="mt-[1px] h-4 w-4 text-ge-green shrink-0" />
+      <div className="text-sm text-ge-gray-1 leading-snug break-words">
+        {parts.map((p, i) => (
+          <span
+            key={i}
+            className={p.bold ? "font-extrabold text-ge-gray-1" : ""}
+          >
+            {p.text}
+          </span>
+        ))}
       </div>
     </div>
   );
 }
 
-export default function RecapitulatifLive() {
-  // Données “validées” (quand on clique Continuer)
+export default function RecapInterventionCard({
+  title = "Récapitulatif de votre rendez-vous",
+}: {
+  title?: string;
+}) {
   const store = useFormStore() as FormState;
-
-  // Données “live” (pendant la saisie)
   const live = useRecapLiveStore();
 
-  // Priorité au live si présent, sinon store
   const stepDiagnostic = live.stepDiagnostic ?? store.stepDiagnostic ?? {};
   const stepVehicule = live.stepVehicule ?? store.stepVehicule ?? {};
   const stepRendezVous = live.stepRendezVous ?? store.stepRendezVous ?? {};
   const stepCoordonnees = live.stepCoordonnees ?? store.stepCoordonnees ?? {};
 
-  // ---- Diagnostic
-  const showDiagnostic =
-    isFilled(stepDiagnostic?.vitrage) ||
-    (stepDiagnostic?.vitrage === "Pare-Brise" && isFilled(stepDiagnostic?.dommage));
+  const items = useMemo<RecapItem[]>(() => {
+    const vitrage = toText((stepDiagnostic as any)?.vitrage);
+    const dommage = toText((stepDiagnostic as any)?.dommage);
 
-  // ---- Véhicule
-  const showVehicule =
-    isFilled(stepVehicule?.assurance) ||
-    isFilled(stepVehicule?.immatriculation) ||
-    isFilled(stepVehicule?.marque_modele_vehicule);
+    const marqueModele = toText((stepVehicule as any)?.marque_modele_vehicule);
+    const assurance = toText((stepVehicule as any)?.assurance);
 
-  // ---- RDV
-  const rdvType = stepRendezVous?.type ? String(stepRendezVous.type) : "";
-  const rdvAdresse = stepRendezVous?.adresse ? String(stepRendezVous.adresse) : "";
-  const rdvVille = stepRendezVous?.ville ? String(stepRendezVous.ville) : "";
-  const rdvDate = formatDate(stepRendezVous?.date_souhaitee);
-  const rdvCreneau = stepRendezVous?.creneau ? String(stepRendezVous.creneau) : "";
+    const rdvType = toText((stepRendezVous as any)?.type);
+    const rdvVille = toText((stepRendezVous as any)?.ville);
+    const rdvAdresse = toText((stepRendezVous as any)?.adresse);
 
-  const showRdv =
-    isFilled(rdvType) || isFilled(rdvAdresse) || isFilled(rdvVille) || isFilled(rdvDate) || isFilled(rdvCreneau);
+    const rdvDate = formatDateFR((stepRendezVous as any)?.date_souhaitee);
+    const rdvCreneau = formatTimeFR((stepRendezVous as any)?.creneau);
 
-  // ---- Coordonnées
-  const coordNom = stepCoordonnees?.nom_prenom ? String(stepCoordonnees.nom_prenom) : "";
-  const coordTel = formatPhone(stepCoordonnees?.telephone);
-  const coordEmail = stepCoordonnees?.email ? String(stepCoordonnees.email) : "";
+    const isCentre = rdvType.toLowerCase().includes("centre");
+    const lieu = isCentre
+      ? rdvVille
+      : isFilled(rdvAdresse)
+      ? rdvAdresse
+      : rdvVille;
 
-  const showCoord = isFilled(coordNom) || isFilled(coordTel) || isFilled(coordEmail);
+    const out: RecapItem[] = [];
 
-  // Si rien n’est encore rempli
-  const showAnything = showDiagnostic || showVehicule || showRdv || showCoord;
+    // Intervention
+    if (isFilled(vitrage)) {
+      out.push({
+        id: "intervention",
+        textParts: [
+          { text: "Remplacement de " },
+          { text: vitrage.toLowerCase(), bold: true },
+        ],
+      });
+
+      if (vitrage === "Pare-Brise" && isFilled(dommage)) {
+        out.push({
+          id: "dommage",
+          textParts: [
+            { text: "Dommage : " },
+            { text: dommage, bold: true },
+          ],
+        });
+      }
+    }
+
+    // Véhicule
+    if (isFilled(marqueModele)) {
+      out.push({
+        id: "vehicule",
+        textParts: [
+          { text: "Véhicule " },
+          { text: marqueModele, bold: true },
+        ],
+      });
+    }
+
+    // Assurance
+    if (isFilled(assurance)) {
+      out.push({
+        id: "assurance",
+        textParts: [
+          { text: "Assuré par " },
+          { text: assurance, bold: true },
+        ],
+      });
+    }
+
+    // RDV
+    if (isFilled(rdvDate) || isFilled(rdvCreneau) || isFilled(lieu)) {
+      const dateCreneau = [rdvDate, rdvCreneau]
+        .filter(Boolean)
+        .join(" - ");
+
+      out.push({
+        id: "rdv",
+        textParts: [
+          { text: "Votre rendez-vous le " },
+          { text: dateCreneau || "—", bold: true },
+          { text: " dans " },
+          { text: isCentre ? "le centre de " : "" },
+          { text: lieu || "—", bold: true },
+        ],
+      });
+    }
+
+    // Coordonnées
+    const nom = toText((stepCoordonnees as any)?.nom_prenom);
+    const email = toText((stepCoordonnees as any)?.email);
+
+    if (isFilled(nom) || isFilled(email)) {
+      out.push({
+        id: "coord",
+        textParts: [
+          { text: "Contact : " },
+          { text: [nom, email].filter(Boolean).join(" — "), bold: true },
+        ],
+      });
+    }
+
+    return out;
+  }, [stepDiagnostic, stepVehicule, stepRendezVous, stepCoordonnees]);
 
   return (
-    <div className="bg-white rounded-md px-6 py-6">
-      <div className=" text-xl border-l-8 border-ge-yellow pl-2 font-extrabold text-ge-gray-1 text-base mb-5">
-        Récapitulatif de votre rendez-vous
+    <div className="bg-white rounded-md px-6 py-5">
+      <SectionHeader className="mb-2" id="formVehiculeSIV">
+                    {title}
+                  </SectionHeader>
+
+      <div className="mt-3">
+        {items.length === 0 ? (
+          <p className="text-sm text-ge-gray-3">
+            Vos choix s’afficheront ici au fur et à mesure
+          </p>
+        ) : (
+          items.map((it) => (
+            <InterventionLine key={it.id} parts={it.textParts} />
+          ))
+        )}
       </div>
-
-      {!showAnything && (
-        <p className="text-sm text-ge-gray-3">
-          Vos choix s’afficheront ici au fur et à mesure
-        </p>
-      )}
-
-      {showAnything && (
-        <div className="divide-y divide-ge-gray-4">
-          {/* DIAGNOSTIC */}
-          {showDiagnostic && (
-            <div className="py-2">
-              <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Diagnostic</div>
-              <Row label="Vitrage" value={stepDiagnostic?.vitrage} />
-              {stepDiagnostic?.vitrage === "Pare-Brise" && (
-                <Row label="Dommage" value={stepDiagnostic?.dommage} />
-              )}
-            </div>
-          )}
-
-          {/* VEHICULE */}
-          {showVehicule && (
-            <div className="py-2">
-              <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Véhicule</div>
-              <Row label="Assurance" value={stepVehicule?.assurance} />
-              <Row label="Immatriculation" value={stepVehicule?.immatriculation} />
-              <Row label="Modèle" value={stepVehicule?.marque_modele_vehicule} />
-            </div>
-          )}
-
-          {/* RENDEZ-VOUS */}
-          {showRdv && (
-            <div className="py-2">
-              <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Rendez-vous</div>
-              <Row label="Intervention" value={rdvType} />
-              {/* On affiche l’adresse OU la ville selon le type (si renseigné) */}
-              <Row label="Adresse" value={rdvAdresse} />
-              <Row label="Ville" value={rdvVille} />
-              <Row label="Date" value={rdvDate} />
-              <Row label="Créneau" value={rdvCreneau ? rdvCreneau.toLowerCase() : ""} />
-            </div>
-          )}
-
-          {/* COORDONNEES */}
-          {showCoord && (
-            <div className="py-2">
-              <div className="text-sm font-extrabold text-ge-gray-2 mb-1">Coordonnées</div>
-              <Row label="Nom" value={coordNom} />
-              <Row label="Téléphone" value={coordTel} />
-              <Row label="Email" value={coordEmail} showCheck={!!coordEmail} />
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

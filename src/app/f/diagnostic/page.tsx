@@ -16,6 +16,7 @@ import Card from '@/components/atoms/Card';
 import { useForm } from "react-hook-form";
 import DommageTypeSelect from '@/components/molecules/Forms/DommageTypeSelect';
 import VitrageTypeSelect from '@/components/molecules/Forms/VitrageTypeSelect';
+import { CheckCircle2 } from "lucide-react";
 
 // Form validation
 import { StepDiagnosticSchema } from '@/helpers/validation';
@@ -141,13 +142,9 @@ useEffect(() => {
           </div>
 
           {/* MESSAGE A LA FIN */}
-          <SectionMessage type='secondary' justify={false} className='xl:mx-20 my-8 justify-center py-2 rounded-md'>
-            <Image
-              className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
-              priority
-              src={GreenCheck}
-              alt="Green check"
-            />
+          <SectionMessage type='secondary' justify={false} className='xl:mx-20 my-8 justify-center py-2 gap-1 rounded-md'>
+            
+            <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
             <p className='xl:text-sm text-xs font-light'>Temps moyen d&apos;intervention : <span className='font-black'>1 heure</span></p>
           </SectionMessage>
         </Card>

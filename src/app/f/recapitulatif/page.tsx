@@ -109,13 +109,13 @@ export default function RecapitulatifPage() {
                 src={GreenCheck}
                 alt="Green check"
               />
-              Merci {submittedData.stepCoordonnees?.nom_prenom}, nous avons bien reçu votre demande
+              Merci {submittedData.stepCoordonnees?.nom_prenom}, <span className=''>nous avons bien reçu votre demande</span>
             </SectionMessage>
           </div>
 
           <div className="mx-auto col-span-2 grid grid-cols-2 gap-4 mb-6">
             <div className='flex'>
-              <div>
+              <div className=''>
                 <header className={`pl-2 font-bold text-ge-gray-3 text-md mb-1`}>
                   Diagnostic
                 </header>
@@ -173,6 +173,7 @@ export default function RecapitulatifPage() {
 
     </Card>
 
+    <div className='flex'>
     {/* AVANTAGES */}
     <Card>
       <SectionHeader>
@@ -247,7 +248,7 @@ export default function RecapitulatifPage() {
       </div>
 
     </Card>
-
+    </div>
 
     <div className='flex justify-center'>
       {/* TODO : remove OnClick (for development purpose) */}

@@ -21,7 +21,9 @@ import SIVPlaqueInput from "@/components/atoms/Forms/SIVPlaqueInput";
 import Card from "@/components/atoms/Card";
 import ModeleVehiculeCard from "@/components/atoms/ModeleVehiculeCard";
 import ImmatriculationVehiculeCard from "@/components/atoms/ImmatriculationVehiculeCard";
+import FullScreenSpinner from "@/components/atoms/FullScreenSpinner";
 import { CheckCircle2 } from "lucide-react";
+
 
 import { StepVehiculeSchema } from "@/helpers/validation";
 import useFormStore, { FormState } from "@/store/form";
@@ -205,6 +207,7 @@ useEffect(() => {
 
   return (
     <>
+    {vehiculeLoading && <FullScreenSpinner />}
       <form id="vehicule-form" onSubmit={handleSubmit(onSubmit)}>
         {/* SELECTION DE L'ASSURANCE */}
         <Card>
@@ -410,7 +413,7 @@ useEffect(() => {
                 <div className="flex mb-3 xl:mb-6 justify-center">
                   <div>
                     <div className="flex">
-                      <SectionMessage type="secondary" justify={false}>
+                      <SectionMessage type="secondary" className="gap-1" justify={false}>
                         
                         <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
                         <p className="xl:text-sm text-xs font-light">

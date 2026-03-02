@@ -122,7 +122,7 @@ const showAside =
                 <div className="xl:mx-auto xl:max-w-7xl">
       
   <div
-    className="mt-14 xl:mt-0 xl:flex xl:flex-row xl:gap-3"
+    className="mt-14 xl:mt-0 flex xl:flex-row xl:gap-3 flex-col-reverse"
   >
     {/* MAIN CONTENT */}
     <div className="xl:basis-3/4">

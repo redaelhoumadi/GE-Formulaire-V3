@@ -5,6 +5,7 @@ import handleScroll from '@/helpers/scroll-into';
 
 // SVGs
 import GreenCheck from "@public/images/components/GreenCheck.svg";
+import { CheckCircle2 } from "lucide-react";
 
 import SectionHeader from '@/components/atoms/SectionHeader';
 import SectionMessage from '@/components/atoms/SectionMessage';
@@ -141,13 +142,9 @@ useEffect(() => {
           </div>
 
           {/* MESSAGE A LA FIN */}
-          <SectionMessage type='secondary' justify={false} className='xl:mx-20 my-8 justify-center py-2 rounded-md'>
-            <Image
-              className="w-6 h-5 mr-2 -ml-1 bg-ge-green-2 rounded-md p-0.5"
-              priority
-              src={GreenCheck}
-              alt="Green check"
-            />
+          <SectionMessage type='secondary' justify={false} className='xl:mx-20 gap-1 my-8 justify-center py-2 rounded-md'>
+        
+            <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
             <p className='xl:text-sm text-xs font-light'>Temps moyen d&apos;intervention : <span className='font-black'>1 heure</span></p>
           </SectionMessage>
         </Card>

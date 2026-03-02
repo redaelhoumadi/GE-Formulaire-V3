@@ -39,7 +39,7 @@ export const dommages: ButtonSelectionOption[] = [
         label: <div className='grid grid-cols-3 items-center gap-1'>
             <div className='md:col-span-3 flex justify-center'>
                 <Image
-                    className="w-10 h-10 xl:w-24 xl:h-24"
+                    className="w-10 h-10 xl:w-16 xl:h-16"
                     priority
                     src={Fissure}
                     alt="fissure"
@@ -57,7 +57,7 @@ export const dommages: ButtonSelectionOption[] = [
         label: <div className='grid grid-cols-3 items-center gap-1'>
             <div className='md:col-span-3 flex justify-center'>
                 <Image
-                    className="w-10 h-10 xl:w-24 xl:h-24"
+                    className="w-10 h-10 xl:w-12 xl:h-16"
                     priority
                     src={Impact}
                     alt="impact"
@@ -75,7 +75,7 @@ export const dommages: ButtonSelectionOption[] = [
         label: <div className='grid grid-cols-3 items-center gap-1'>
             <div className='md:col-span-3 flex justify-center'>
                 <Image
-                    className="w-10 h-10 xl:w-24 xl:h-24"
+                    className="w-10 h-10 xl:w-16 xl:h-16"
                     priority
                     src={PlusieursImpacts}
                     alt="plusieurs impacts"

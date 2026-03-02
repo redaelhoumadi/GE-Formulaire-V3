@@ -63,6 +63,14 @@ useEffect(() => {
     });
   }, [stepDiagnostic]);
 
+  useEffect(() => {
+  if (data?.dommage) {
+    setTimeout(() => {
+      handleScroll("formDiagnosticMessage")();
+    }, 150);
+  }
+}, [data?.dommage]);
+
   // // effect runs when user state is updated
   // useEffect(() => {
   //   if(data.vitrage) onSelectedVitrage()
@@ -142,11 +150,20 @@ useEffect(() => {
           </div>
 
           {/* MESSAGE A LA FIN */}
-          <SectionMessage type='secondary' justify={false} className='xl:mx-20 gap-1 my-8 justify-center py-2 rounded-md'>
-        
-            <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
-            <p className='xl:text-sm text-xs font-light'>Temps moyen d&apos;intervention : <span className='font-black'>1 heure</span></p>
-          </SectionMessage>
+          {data.dommage && (
+  <div id="formDiagnosticMessage">
+    <SectionMessage
+      type='secondary'
+      justify={false}
+      className='xl:mx-20 gap-1 my-8 justify-center py-2 rounded-md'
+    >
+      <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
+      <p className='xl:text-sm text-xs font-light'>
+        Temps moyen d&apos;intervention : <span className='font-black'>1 heure</span>
+      </p>
+    </SectionMessage>
+  </div>
+)}
         </Card>
       }
       <div id="formDiagnosticDommage"></div>

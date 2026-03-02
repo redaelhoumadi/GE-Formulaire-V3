@@ -142,11 +142,11 @@ export default function RecapInterventionCard({
       out.push({
         id: "rdv",
         textParts: [
-          { text: "Votre rendez-vous le " },
-          { text: dateCreneau || "—", bold: true },
-          { text: " dans " },
+          { text: "Rendez-vous dans " },
           { text: isCentre ? "le centre de " : "" },
           { text: lieu || "—", bold: true },
+          { text: " le " },
+          { text: dateCreneau || "—", bold: true },
         ],
       });
     }

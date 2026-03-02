@@ -64,7 +64,7 @@ const assuranceLogos: Record<string, string> = {
   AUTOFIRST: "/images/components/assurances/Autofirst.png",
   AVANSSUR: "/images/components/assurances/Avanssur.png",
   AVIVA: "/images/components/assurances/Aviva.png",
-  "ABEILLE ASSU": "/images/components/assurances/Abeille-assurance.png",
+  "AVIVA/ABEILLE ASSU": "/images/components/assurances/Abeille-assurance.png",
   "AXA PARTENAIRE": "/images/components/assurances/Axa-Partennaire.png",
   "BANQUE POPULAIRE": "/images/components/assurances/Banque-populaire.png",
   BLABLASUR: "/images/components/assurances/Blablasure.png",
@@ -100,7 +100,7 @@ const assuranceLogos: Record<string, string> = {
   "LEADER ASSURANCE": "/images/components/assurances/Groupe-leader.png",
   LEOCARE: "/images/components/assurances/Leocare.png",
   "LIBEA ASSURANCE": "/images/components/assurances/MASCF.png",
-  "LSA COURTAGE": "/images/components/assurances/LSA-courtage",
+  "LSA COURTAGE": "/images/components/assurances/LSA-courtage.png",
   MAAF: "/images/components/assurances/Maaf.png",
   "MACIF FILIA":"/images/components/assurances/MAcif.png",
   MACSF:"/images/components/assurances/MASCF.png",
@@ -215,16 +215,24 @@ useEffect(() => {
 
           <div className="mt-8 grid grid-cols-1 gap-x-8 xl:max-w-md container mx-auto">
             <SelectInput
-              name="assurance"
-              control={control}
-              onClick={() => setTimeout(() => handleScroll("formVehiculeSIV")(), 200)}
-              fullWidth
-              defaultValue="Assurance*"
-              values={[
-                { label: "Autre / Je ne sais pas", value: "Autre / Je ne sais pas" },
-                { label: "AXA", value: "AXA" },
-                { label: "MACIF", value: "MACIF" },
-                { label: "MATMUT", value: "MATMUT" },
+  name="assurance"
+  control={control}
+  onClick={() => setTimeout(() => handleScroll("formVehiculeSIV")(), 200)}
+  fullWidth
+  defaultValue="Assurance*"
+  values={[
+    {
+      label: "Assurances phares",
+      options: [
+        { label: "AXA", value: "AXA" },
+        { label: "MACIF", value: "MACIF" },
+        { label: "MATMUT", value: "MATMUT" },
+      ],
+    },
+    {
+      label: "Autres assurances",
+      options: [
+        { label: "Autre / Je ne sais pas", value: "Autre / Je ne sais pas" },
                 { label: "ACM", value: "ACM" },
                 { label: "ACTIV ASSURANCE", value: "ACTIV ASSURANCE" },
                 { label: "AGPM", value: "AGPM" },
@@ -330,8 +338,10 @@ useEffect(() => {
                 { label: "VERSPIEREN", value: "VERSPIEREN" },
                 { label: "XENASSUR", value: "XENASSUR" },
                 { label: "ZEPHIR", value: "ZEPHIR" },
-              ]}
-            />
+      ],
+    },
+  ]}
+/>
 
             {/* ✅ LOGO ASSURANCE (juste après le SelectInput) */}
             {assuranceLogoSrc && (

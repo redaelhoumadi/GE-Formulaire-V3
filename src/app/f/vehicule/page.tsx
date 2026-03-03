@@ -22,6 +22,7 @@ import Card from "@/components/atoms/Card";
 import ModeleVehiculeCard from "@/components/atoms/ModeleVehiculeCard";
 import ImmatriculationVehiculeCard from "@/components/atoms/ImmatriculationVehiculeCard";
 import { CheckCircle2 } from "lucide-react";
+import Voiture from "@public/images/components/voiture.jpg";
 
 
 import { StepVehiculeSchema } from "@/helpers/validation";

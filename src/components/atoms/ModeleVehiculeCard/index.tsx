@@ -1,5 +1,6 @@
 import Image from "next/image";
 import PetiteVoiture from "@public/images/components/PetiteVoiture.svg";
+import Voiture from "@public/images/components/voiture.jpg";
 import TextInput from "../Forms/TextInput";
 import SectionMessage from "../SectionMessage";
 import GreenCheck from "@public/images/components/GreenCheck.svg";
@@ -29,7 +30,7 @@ export default function ModeleVehiculeCard(props: ModeleVehiculeCardProps) {
             <div className="mx-auto">
                 <Image
                     className="w-20 h-20"
-                    src={PetiteVoiture}
+                    src={Voiture}
                     alt="Modele de voiture"
                 />
             </div>

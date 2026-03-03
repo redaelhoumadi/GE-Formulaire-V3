@@ -61,7 +61,7 @@ export default function RecapitulatifPage() {
         Merci {submittedData.stepCoordonnees?.nom_prenom}, nous avons bien reçu votre demande
       </SectionMessage>
 
-      <div className='hidden xl:block my-8'>
+      <div className='hidden xl:block my-1'>
         <SectionHeader>
           Un conseiller va vous appeler pour organiser votre rendez-vous
         </SectionHeader>
@@ -89,7 +89,7 @@ export default function RecapitulatifPage() {
 
 
         <div className='xl:hidden'>
-          <SectionHeader className='my-8 xl:my-2'>
+          <SectionHeader className='my-8'>
             Un conseiller va vous appeler pour organiser votre rendez-vous
           </SectionHeader>
         </div>

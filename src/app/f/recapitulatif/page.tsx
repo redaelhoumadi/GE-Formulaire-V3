@@ -7,6 +7,8 @@ import GreenCheck from "@public/images/components/GreenCheck.svg";
 import TelephoneWhite from '@public/images/components/TelephoneWhite.svg';
 import SectionHeader from '@/components/atoms/SectionHeader';
 import SectionMessage from '@/components/atoms/SectionMessage';
+import { CheckCircle2 } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 
 // Forms
 import ClickableCar from '@/components/atoms/Forms/ClickableCar';
@@ -55,12 +57,7 @@ export default function RecapitulatifPage() {
     {/* CONFIRMATION */}
     <Card>
       <SectionMessage className='block xl:hidden my-6 font-extrabold' type='primary'>
-        <Image
-          className="w-10 h-10 mr-2 -ml-1"
-          priority
-          src={GreenCheck}
-          alt="Green check"
-        />
+        <CheckCircle className="h-10 w-16 text-ge-green shrink-0" />
         Merci {submittedData.stepCoordonnees?.nom_prenom}, nous avons bien reçu votre demande
       </SectionMessage>
 
@@ -92,7 +89,7 @@ export default function RecapitulatifPage() {
 
 
         <div className='xl:hidden'>
-          <SectionHeader className='my-8'>
+          <SectionHeader className='my-8 xl:my-2'>
             Un conseiller va vous appeler pour organiser votre rendez-vous
           </SectionHeader>
         </div>
@@ -103,13 +100,8 @@ export default function RecapitulatifPage() {
 
           <div className='col-span-2 hidden xl:block '>
             <SectionMessage className='mt-6 mb-2 font-extrabold' type='primary'>
-              <Image
-                className="w-6 h-6 mr-6"
-                priority
-                src={GreenCheck}
-                alt="Green check"
-              />
-              Merci {submittedData.stepCoordonnees?.nom_prenom}, <span className=''>nous avons bien reçu votre demande</span>
+              <CheckCircle className="h-10 w-16 text-ge-green shrink-0" />
+              Merci {submittedData.stepCoordonnees?.nom_prenom}, nous avons bien reçu votre demande
             </SectionMessage>
           </div>
 
@@ -173,7 +165,7 @@ export default function RecapitulatifPage() {
 
     </Card>
 
-    <div className='flex'>
+    <div className=''>
     {/* AVANTAGES */}
     <Card>
       <SectionHeader>
@@ -181,32 +173,17 @@ export default function RecapitulatifPage() {
       </SectionHeader>
       <div className="grid grid-cols-3 gap-x-6 gap-y-2 my-6">
         <div className="flex items-center space-x-1">
-          <Image
-            className="w-5 h-4 mr-1"
-            priority
-            src={GreenCheck}
-            alt="Green check"
-          />
+          <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
           <p className='xl:text-xs text-ge-gray-3 text-[9px]'>Aucun frais ni démarches</p>
         </div>
         <div className="flex items-center space-x-1">
-          <Image
-            className="w-5 h-4 mr-1"
-            priority
-            src={GreenCheck}
-            alt="Green check"
-          />
+          <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
           <p className='xl:text-xs text-ge-gray-3 text-[10px]'>
             {submittedData.stepRendezVous?.type == "En agence" ? "Véhicule de prêt gratuit" : "Déplacement gratuit"}
           </p>
         </div>
         <div className="flex items-center space-x-1">
-          <Image
-            className="w-5 h-4 mr-1"
-            priority
-            src={GreenCheck}
-            alt="Green check"
-          />
+          <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
           <p className='xl:text-xs text-ge-gray-3 text-[10px]'>Données non partagées</p>
         </div>
       </div>

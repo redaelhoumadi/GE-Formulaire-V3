@@ -26,12 +26,8 @@ export default function ModeleVehiculeCard(props: ModeleVehiculeCardProps) {
     const { vehicule } = props;
     return (
         <div className="grid grid-cols-2 items-center">
-            <div className="mx-auto">
-                <Image
-                    className="w-20 h-20"
-                    src={PetiteVoiture}
-                    alt="Modele de voiture"
-                />
+            <div className="mr-0">
+                <img src="/images/components/carside.png" alt="Modele de voiture" className="w-22 h-12" />
             </div>
             {vehicule ? <p className="text-sm text-center font-bold text-ge-gray-1">{vehicule}</p> :
                 <p className="text-sm text-center text-ge-gray-3">Votre véhicule</p>

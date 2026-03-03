@@ -223,14 +223,14 @@ useEffect(() => {
     {
       label: "Assurances phares",
       options: [
-        { label: "ACM", value: "ACM" },
+        { label: "MACIF", value: "MACIF" }, 
+        { label: "AXA", value: "AXA" },  
         { label: "ALLIANZ", value: "ALLIANZ" },
-        { label: "AXA", value: "AXA" },
         { label: "GENERALI", value: "GENERALI" },
         { label: "GROUPAMA", value: "GROUPAMA" },
-        { label: "MACIF", value: "MACIF" },     
         { label: "MAIF", value: "MAIF" },
         { label: "MATMUT", value: "MATMUT" },
+        { label: "ACM", value: "ACM" },
       ],
     },
     {

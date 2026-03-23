@@ -1,56 +1,66 @@
 import { ReactNode } from 'react';
 
 interface ButtonPictoProps {
-    /**
-     * Add particular classes
-     */
     className?: string;
-    /**
-     * How large should the button be?
-     */
     size?: 'small' | 'medium' | 'large';
-    /**
-     * Button contents
-     */
     fullWidth?: boolean;
-    /**
-     * Optional click handler
-     */
     onClick?: () => void;
-    /*
-    * Inside the button
-    */
     children: ReactNode;
-    /**
-     * Validate a form
-     */
     form?: string;
-    /**
-     * Button type
-     */
     type?: "button" | "submit" | "reset" | undefined;
-    /**
-     * Button style
-     */
     style?: "fill" | "selected" | "default" | undefined;
 }
 
-
 export default function ButtonPicto(props: ButtonPictoProps) {
-    const { children, fullWidth, onClick, className, form, style } = props;
+    const { children, fullWidth, onClick, className = '', form, style } = props;
 
-    let styleProp = 'text-ge-gray-1 bg-transparent border-1 hover:border-ge-yellow border border-ge-gray-3 focus:ring-4 focus:outline-none focus:ring-gray-100 font-bold text-xs md:text-sm  py-4 items-center mr-2 mb-4 rounded-md';
-    styleProp = style == "fill" ? '' : styleProp
-    styleProp = style == "selected" ? 'text-ge-gray-1 border-1 bg-ge-yellow hover:border-ge-yellow border border-ge-yellow focus:ring-4 focus:outline-none focus:ring-gray-100 font-bold text-xs md:text-sm py-4 items-center mr-2 mb-4 rounded-md' : styleProp
+    let styleProp = '';
+
+    if (style === 'selected') {
+        styleProp = `
+            bg-yellow-400
+            border border-ge-yellow
+            text-ge-gray-1
+            shadow-[0_2px_12px_rgba(252,205,34,0.25)]
+            scale-[1.02]
+        `;
+    } else if (style === 'fill') {
+        styleProp = '';
+    } else {
+        // default
+        styleProp = `
+            bg-white
+            border border-ge-gray-3
+            text-ge-gray-1
+            hover:border-ge-yellow/60
+            hover:bg-ge-yellow/5
+        `;
+    }
 
     return (
         <button
             onClick={onClick}
             type={form ? "submit" : "button"}
             form={form}
-            className={`${fullWidth ? 'w-full' : ''} 
-            ${className || ''} ${styleProp}`}>
+            className={`
+                ${fullWidth ? 'w-full' : ''}
+                ${className}
+                ${styleProp}
+                font-semibold
+                text-xs md:text-sm
+                py-4
+                px-3
+                items-center
+                mr-2 mb-3
+                rounded-md
+                transition-all duration-200
+                focus:outline-none
+                focus:ring-2 focus:ring-ge-yellow/40
+                cursor-pointer
+                select-none
+            `}
+        >
             {children}
         </button>
-    )
+    );
 }

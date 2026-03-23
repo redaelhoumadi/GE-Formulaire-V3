@@ -2,71 +2,37 @@
 import Image from 'next/image';
 import { ReactNode, useRef, useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
-import Photo from '../../../../../public/images/components/Photo.svg';
+import { Upload, X, ImageIcon } from 'lucide-react';
 
 interface FileInputProps {
-    /**
-     * Add particular classes
-     */
     className?: string;
-    /**
-     * Input placeholder
-     */
     placeholder?: string;
-    /**
-     * How large should the button be?
-     */
     size?: 'small' | 'medium' | 'large';
-    /**
-     * Type of the button
-     */
     type: 'text' | 'numeric' | 'email';
-    /**
-     * Button contents
-     */
     fullWidth?: boolean;
-    /*
-    * Inside the button
-    */
     label?: ReactNode;
-    /**
-     * Optional click handler
-     */
     onClick?: () => void;
-    /**
-     * Validate a form
-     */
     required?: boolean;
-    /**
-     * Button type
-     */
     name: string;
-    /**
-     * React-hook-form registration
-     */
     register?: any;
-    /**
-     * React-hook-form control
-     */
     control: Control<any>;
 }
 
-
 export default function FileInput(props: FileInputProps) {
-    const { control, label, fullWidth, register = (() => { }), name, placeholder = '' } = props;
+    const { control, label, fullWidth, register = (() => {}), name, placeholder = '' } = props;
     const fullWidthProp = fullWidth ? 'w-full' : '';
 
     const inputFile = useRef<HTMLInputElement | null>(null);
     const [fileName, setFilename] = useState("");
     const [fileError, setFileError] = useState("");
+    const [isDragging, setIsDragging] = useState(false);
 
-    const onButtonClick = () => {
-        inputFile?.current?.click();
-    };
+    const onButtonClick = () => inputFile?.current?.click();
 
     const onChangeFile = (onChangeRec: any) => (event: any) => {
         event.preventDefault();
-        var file = event.target.files[0];
+        const file = event.target.files[0];
+        if (!file) return;
         if (file.size > 8 * 1000 * 1024) {
             setFileError("Le fichier doit faire au maximum 8 MB.");
             return false;
@@ -74,43 +40,105 @@ export default function FileInput(props: FileInputProps) {
         setFileError("");
         setFilename(file.name);
         onChangeRec(file);
-    }
+    };
+
+    const clearFile = (onChange: any) => (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setFilename("");
+        onChange(null);
+        if (inputFile.current) inputFile.current.value = "";
+    };
 
     return (
-        <div className="mb-6">
-            {fileError && <span className="ml-2 text-xs text-ge-red font-medium">{fileError}</span>}
-            <label htmlFor={name} className="block ml-4 mb-2 text-xs md:text-base text-ge-gray-1">{label}</label>
-            <div className="relative" onClick={onButtonClick}>
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3.5">
-                    <Image
-                        className="w-8 h-8 mr-2 -ml-1"
-                        priority
-                        src={Photo}
-                        alt="Photo"
-                    />
-                </div>
-                <input
-                    type="text"
-                    name={"file_" + name}
-                    className={`pl-12 border border-ge-gray-3 text-ge-gray-1 text-sm md:text-base focus:ring-ge-gray-1 rounded-md focus:border-ge-gray-1 block ${fullWidthProp} p-2.5`}
-                    placeholder={placeholder}
-                    value={fileName}
-                    readOnly />
-                <Controller
-                    control={control}
-                    name={name}
-                    render={({ field: { value, onChange } }) => (
+        <div className={`mb-4 ${fullWidthProp}`}>
+            {label && (
+                <label className="block ml-1 mb-2 text-xs font-medium text-ge-gray-3">
+                    {label}
+                </label>
+            )}
+
+            {fileError && (
+                <p className="mb-2 text-xs text-ge-red font-semibold flex items-center gap-1">
+                    <span>⚠</span> {fileError}
+                </p>
+            )}
+
+            <Controller
+                control={control}
+                name={name}
+                render={({ field: { value, onChange } }) => (
+                    <>
+                        <div
+                            onClick={onButtonClick}
+                            onDragEnter={() => setIsDragging(true)}
+                            onDragLeave={() => setIsDragging(false)}
+                            onDrop={() => setIsDragging(false)}
+                            className={`
+                                relative cursor-pointer
+                                border border-dashed rounded-md
+                                px-4 py-4
+                                flex items-center gap-3
+                                transition-all duration-200
+                                ${isDragging
+                                    ? "border-ge-green bg-ge-green/5"
+                                    : fileName
+                                    ? "border-ge-green/40 bg-ge-green/3"
+                                    : "border-ge-gray-3 hover:border-ge-gray-2 bg-ge-gray-5 hover:bg-white"
+                                }
+                            `}
+                        >
+                            {/* Icon */}
+                            <div className={`
+                                w-9 h-9 rounded-lg flex items-center justify-center shrink-0
+                                ${fileName ? "bg-ge-green/10" : "bg-white border border-ge-gray-3"}
+                            `}>
+                                {fileName
+                                    ? <ImageIcon className="w-4 h-4 text-ge-green" />
+                                    : <Upload className="w-4 h-4 text-ge-gray-3" />
+                                }
+                            </div>
+
+                            {/* Text */}
+                            <div className="flex-1 min-w-0">
+                                {fileName ? (
+                                    <p className="text-sm font-semibold text-ge-gray-1 truncate">{fileName}</p>
+                                ) : (
+                                    <>
+                                        <p className="text-sm text-ge-gray-1 font-medium truncate">
+                                            {placeholder || "Ajouter une photo"}
+                                        </p>
+                                        <p className="text-[10px] text-ge-gray-3 mt-0.5">JPG, PNG — max. 8 MB</p>
+                                    </>
+                                )}
+                            </div>
+
+                            {/* Clear or chevron */}
+                            {fileName ? (
+                                <button
+                                    type="button"
+                                    onClick={clearFile(onChange)}
+                                    className="shrink-0 w-6 h-6 rounded-full bg-ge-gray-4 flex items-center justify-center hover:bg-ge-red/10 transition-colors"
+                                >
+                                    <X className="w-3 h-3 text-ge-gray-1" />
+                                </button>
+                            ) : (
+                                <span className="shrink-0 text-[10px] font-semibold text-ge-green border border-ge-green/30 rounded-md px-2 py-1">
+                                    Choisir
+                                </span>
+                            )}
+                        </div>
+
                         <input
                             {...register(name)}
                             type="file"
                             className="hidden"
-                            accept='image/png, image/jpg, image/jpeg'
+                            accept="image/png, image/jpg, image/jpeg"
                             ref={inputFile}
                             onChange={onChangeFile(onChange)}
                         />
-                    )}
-                />
-            </div>
+                    </>
+                )}
+            />
         </div>
-    )
+    );
 }

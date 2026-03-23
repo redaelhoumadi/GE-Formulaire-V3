@@ -155,7 +155,7 @@ useEffect(() => {
     <SectionMessage
       type='secondary'
       justify={false}
-      className='xl:mx-20 gap-1 my-8 justify-center py-2 rounded-md'
+      className=''
     >
       <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
       <p className='xl:text-sm text-xs font-light'>

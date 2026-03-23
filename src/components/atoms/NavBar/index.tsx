@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Telephone from '@public/images/components/TelephoneWhite.svg';
+import TelephonePC from '@public/images/components/TelephonePC.svg';
 import { useState } from 'react';
 import CallbackInput from '../Forms/CallbackInput';
 import ButtonPill from '../Buttons/ButtonPill';
@@ -12,6 +13,13 @@ interface NavBarProps {
     title?: string;
 }
 
+const steps = [
+    { label: 'Diagnostic', no: 1 },
+    { label: 'Véhicule', no: 2 },
+    { label: 'Rendez-vous', no: 3 },
+    { label: 'Coordonnées', no: 4 },
+];
+
 export default function NavBar(props: NavBarProps) {
     const { step, stepPercent, title, stepNo } = props;
     const [viewPhone, setViewPhone] = useState(false);
@@ -19,84 +27,106 @@ export default function NavBar(props: NavBarProps) {
 
     return (
         <>
-            <nav className="block xl:hidden bg-white fixed w-full z-20 top-0 left-0">
-                <div className="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto xl:container p-3 xl:px-52">
-                    <div className="w-full font-medium text-ge-gray-3" id="navbar-sticky">
-                        <div className="grid grid-cols-8 gap-4">
-                            <div className='col-start-3 col-span-4 xl:col-start-4 xl:col-span-2'>
-                                <h3 className="text-center text-[10px] xl:text-md p-0">Étape {step}</h3>
-                                <h1 className="text-center font-bold text-sm xl:text-xl leading-3">{title}</h1>
-                            </div>
-                            <div className="col-span-2 xl:col-span-3 flex justify-end">
-                                <div className="self-center">
-                                    <ButtonPill padding="py-1 px-4" className="cursor-pointer" style="success">
-                                        <Link href="tel:0800100244">
-                                            <Image
-                                                className="w-6 h-5 xl:hidden"
-                                                priority
-                                                src={Telephone}
-                                                alt="Telephone"
-                                            />
-                                        </Link>
-                                    </ButtonPill>
+            {/* ── MOBILE NAV ── */}
+            <nav className="block xl:hidden bg-white fixed w-full z-20 top-0 left-0 shadow-sm">
+                <div className="flex items-center justify-between px-4 py-3">
+                    {/* Step info */}
+                    <div className="flex-1 text-center">
+                        <p className="text-[10px] text-ge-gray-3 font-medium tracking-widest uppercase">
+                            Étape {step}
+                        </p>
+                        <h1 className="font-extrabold text-ge-gray-1 text-sm leading-tight">{title}</h1>
+                    </div>
+                    {/* Phone CTA */}
+                    <ButtonPill padding="py-1.5 px-3" className="cursor-pointer shrink-0" style="success">
+                        <Link href="tel:0800100244" className="flex items-center gap-1.5">
+                            <Image className="w-4 h-4" priority src={Telephone} alt="Téléphone" />
+                            <span className="text-xs font-bold text-white">Appeler</span>
+                        </Link>
+                    </ButtonPill>
+                </div>
+
+                {/* Progress bar */}
+                <div className="px-4 pb-2">
+                    <div className="bg-ge-gray-4 rounded-full h-1.5 overflow-hidden">
+                        <div
+                            className="bg-ge-green h-full rounded-full percentBar transition-all duration-700"
+                            style={{ width: stepPercent }}
+                        />
+                    </div>
+                </div>
+            </nav>
+
+            {/* ── DESKTOP NAV ── */}
+            <nav className="hidden xl:block bg-white fixed w-full z-20 top-0 left-0 border-b border-ge-gray-4">
+                <div className="max-w-7xl mx-auto px-52 flex items-center justify-between py-4">
+
+                    {/* Stepper */}
+                    <div className="flex items-center gap-0">
+                        {steps.map((s, index) => {
+                            const isCompleted = stepNo !== undefined && stepNo > s.no;
+                            const isActive = stepNo === s.no;
+                            const isPending = stepNo !== undefined && stepNo < s.no;
+
+                            return (
+                                <div key={s.no} className="flex items-center">
+                                    <div className="flex flex-col items-center group">
+                                        {/* Circle indicator */}
+                                        <div className={`
+                                            w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
+                                            transition-all duration-300
+                                            ${isCompleted ? 'bg-ge-green text-white shadow-sm' : ''}
+                                            ${isActive ? 'bg-ge-green text-white shadow-[0_0_0_4px_rgba(78,173,57,0.15)]' : ''}
+                                            ${isPending ? 'bg-ge-gray-4 text-ge-gray-3' : ''}
+                                        `}>
+                                            {isCompleted ? (
+                                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                            ) : s.no}
+                                        </div>
+
+                                        {/* Label */}
+                                        <span className={`
+                                            mt-1 text-xs font-semibold whitespace-nowrap transition-colors duration-300
+                                            ${isCompleted ? 'text-ge-green' : ''}
+                                            ${isActive ? 'text-ge-green' : ''}
+                                            ${isPending ? 'text-ge-gray-3' : ''}
+                                        `}>
+                                            {s.label}
+                                        </span>
+                                    </div>
+
+                                    {/* Connector line between steps */}
+                                    {index < steps.length - 1 && (
+                                        <div className={`
+                                            mx-3 h-0.5 w-16 mt-[-14px] rounded-full transition-all duration-500
+                                            ${(stepNo !== undefined && stepNo > s.no) ? 'bg-ge-green' : 'bg-ge-gray-4'}
+                                        `} />
+                                    )}
                                 </div>
-                            </div>
-                        </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Phone CTA */}
+                    <div className="flex items-center gap-3">
+                        <CallbackInput onClick={switchViewPhone} open={viewPhone} />
                     </div>
                 </div>
-                <div className="w-full z-10 xl:container xl:px-52 xl:mx-auto">
-                    <div className='bg-ge-gray-4 rounded-r-full rounded-l-full'>
-                        <div className={`bg-ge-green h-1 rounded-r-full rounded-l-full percentBar`}></div>
-                    </div>
+
+                {/* Desktop progress bar (thin, at the very bottom of nav) */}
+                <div className="h-0.5 bg-ge-gray-4">
+                    <div
+                        className="h-full bg-ge-green percentBar transition-all duration-700"
+                        style={{ width: stepPercent }}
+                    />
                 </div>
             </nav>
-
-            <nav className="hidden xl:block bg-white fixed w-full z-20 top-0 left-0">
-                <div className="max-w-screen-xl flex font-light flex-wrap items-center justify-center mx-auto xl:container p-4 xl:px-52">
-                    
-                    <div className="grid grid-cols-4 gap-2 text-ge-gray-3">
-                        <div className={` ${stepNo && stepNo > 0 ? (stepNo && stepNo == 1 ? 'text-ge-green font-bold' :'opacity-50 text-ge-green') : 'text-ge-gray-1'}`}>
-                            <h1 className="text-center text-md mx-12 my-2">Diagnostic</h1>
-                            <span className={`py-1 w-full flex bg-ge-gray-4 rounded-xl ${stepNo && stepNo > 0 ? (stepNo && stepNo == 1 ? 'bg-ge-green text-ge-green font-bold' :'opacity-50 bg-ge-green') : 'bg-ge-gray-4'}`}></span>
-                        </div>
-                        <div className={`${stepNo && stepNo > 1 ? (stepNo && stepNo == 2 ? 'text-ge-green font-bold' :'opacity-50 text-ge-green') : 'text-ge-gray-3'}`}>
-                            <h1 className="text-center text-md mx-12 my-2">Véhicule</h1>
-                            <span className={`py-1 w-full flex bg-ge-gray-4 rounded-xl ${stepNo && stepNo > 1 ? (stepNo && stepNo == 2 ? 'bg-ge-green text-ge-green font-bold' :'opacity-50 bg-ge-green') : 'bg-ge-gray-4'}`}></span>
-                        </div>
-                        <div className={` ${stepNo && stepNo > 2 ? (stepNo && stepNo == 3 ? 'border-ge-green text-ge-green font-bold' :'border-ge-green opacity-50 text-ge-green') : 'border-ge-gray-4'}`}>
-                            <h1 className="text-center text-md mx-12 my-2">Rendez-vous</h1>
-                            <span className={`py-1 w-full flex bg-ge-gray-4 rounded-xl ${stepNo && stepNo > 2 ? (stepNo && stepNo == 3 ? 'bg-ge-green text-ge-green font-bold' :'opacity-50 bg-ge-green') : 'bg-ge-gray-4'}`}></span>
-                        </div>
-                        <div className={`${stepNo && stepNo > 3 ? (stepNo && stepNo == 4 ? 'border-ge-green text-ge-green font-bold' :'border-ge-green opacity-50 text-ge-green') : 'border-ge-gray-4'}`}>
-                            <h1 className="text-center text-md mx-12 my-2">Coordonnées</h1>
-                            <span className={`py-1 w-full flex bg-ge-gray-4 rounded-xl ${stepNo && stepNo > 3 ? (stepNo && stepNo == 4 ? 'bg-ge-green text-ge-green font-bold' :'opacity-50 bg-ge-green') : 'bg-ge-gray-4'}`}></span>
-                        </div>
-                    </div>
-                    <div className="fixed right-12">
-                        <div className="float-right">
-                            <div className="self-center">
-                                <Link href="tel:0800100244">
-                                    <Image
-                                        className="w-6 h-5 mr-3 xl:hidden"
-                                        priority
-                                        src={Telephone}
-                                        alt="Telephone"
-                                    />
-                                </Link>
-                            </div>
-                            <CallbackInput
-                                onClick={switchViewPhone}
-                                open={viewPhone}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
 
             <style jsx>{`
                 .percentBar {
-                width: ${stepPercent}; 
+                    width: ${stepPercent};
                 }
             `}</style>
         </>

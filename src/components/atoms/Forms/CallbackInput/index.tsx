@@ -1,12 +1,12 @@
 "use client";
 
-import Image from 'next/image'
+import Image from 'next/image';
 import TelephoneWhite from '@public/images/components/TelephoneWhite.svg';
 import Spinner from '@public/images/components/Spinner.svg';
 import WhiteCheck from "@public/images/components/WhiteCheck.svg";
 import ButtonPill from '../../Buttons/ButtonPill';
+import { Phone, CheckCircle } from 'lucide-react';
 
-// Form 
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -16,134 +16,107 @@ import { useSearchParams } from 'next/navigation';
 
 interface CallbackInputProps {
     onClick?: () => void;
-    /**
-     * Button invalid
-     */
     open?: boolean;
 }
 
 export default function CallbackInput(props: CallbackInputProps) {
     const searchParams = useSearchParams();
-
-    const { onClick = (() => { }), open = false } = props;
+    const { onClick = (() => {}), open = false } = props;
     const [loading, setLoading] = useState(false);
+    const [sent, setSent] = useState(false);
     const [GCLID, setGCLID] = useState('');
     const [clientUrl, setClientUrl] = useState('');
-    const [loader, setLoader] = useState(Spinner);
 
-    let classNameProps = 'text-ge-gray-1 text-sm xl:text-base outline-none';
-    const { control, handleSubmit, formState: { errors, touchedFields, isValid, dirtyFields } } = useForm({
+    const { control, handleSubmit, formState: { errors, dirtyFields } } = useForm({
         resolver: yupResolver(PhoneCallbackSchema),
         defaultValues: { phoneNumber: "" },
-        mode: 'onBlur'
-    })
+        mode: 'onBlur',
+    });
+
     const invalid = errors["phoneNumber"] ? true : false;
     const validated = (dirtyFields["phoneNumber"] && !errors["phoneNumber"]) ? true : false;
-    classNameProps = invalid ? 'border border-ge-red text-ge-gray-1 text-sm xl:text-base' : classNameProps;
 
     useEffect(() => {
         const gclid = searchParams.get('gclid');
         const clientUrl = searchParams.get('referrer');
         if (gclid) setGCLID(gclid);
         if (clientUrl) setClientUrl(clientUrl);
-    }, [searchParams])
+    }, [searchParams]);
 
     const onSubmit = (data: any) => {
         setLoading(true);
-        const dataToSubmit = {
-            ...data,
-            GCLID,
-            clientUrl
-        };
-        axios.postForm('/api/rappel', dataToSubmit).then((response) => {
-            console.log('Request sent. ', response.data);
-        })
-            .catch((e) => console.log('Error submitting form..please retry'))
-            .finally(() => setTimeout(() => {
-                setLoader(WhiteCheck)
-            }, 1000))
-        console.log(data)
-    }
+        const dataToSubmit = { ...data, GCLID, clientUrl };
+        axios.postForm('/api/rappel', dataToSubmit)
+            .then(() => {})
+            .catch((e) => console.log('Error'))
+            .finally(() => {
+                setTimeout(() => {
+                    setLoading(false);
+                    setSent(true);
+                }, 1000);
+            });
+    };
 
     const onInputChange = (onChangeController: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        let sanitazedValue: string = value.replace(/\D/g, '');
-        sanitazedValue = sanitazedValue.match(/.{1,2}/g)?.join(' ') || '';
-        onChangeController(sanitazedValue);
+        let sanitizedValue: string = value.replace(/\D/g, '');
+        sanitizedValue = sanitizedValue.match(/.{1,2}/g)?.join(' ') || '';
+        onChangeController(sanitizedValue);
     };
 
     return (
-        <div className='hidden lg:block'>
-            {(!open || loading) ?
-                <ButtonPill onClick={onClick} padding="py-1 px-6" className="cursor-pointer" style="success">
-                    <div className='px-5 flex items-center space-x-12 w-full justify-center lg:block lg:space-x-0'>
+        <div className="hidden lg:block">
+            {/* CTA button or form */}
+            {(!open || loading || sent) ? (
+                <ButtonPill onClick={onClick} padding="py-2 px-5" style={sent ? undefined : "success"} className={`cursor-pointer ${sent ? 'bg-ge-green/10 text-ge-green border border-ge-green/30' : ''}`}>
+                    <div className="flex items-center gap-2">
                         {loading ? (
-                            <p className='align-middle'>
-                                <Image
-                                    className={`w-6 h-6 text-gray-500 ${loader == Spinner ? 'animate-spin' : ''}`}
-                                    priority
-                                    src={loader}
-                                    alt="Loader"
-                                />
-                            </p>
-                        ) : (<p className='align-middle'>
-                            <Image
-                                className="w-5 h-5 my-1 mr-3 float-left"
-                                priority
-                                src={TelephoneWhite}
-                                alt="TelephoneWhite"
-                            />
-                            Être rappelé
-                        </p>
+                            <Image className="w-4 h-4 animate-spin" priority src={Spinner} alt="Chargement" />
+                        ) : sent ? (
+                            <>
+                                <CheckCircle className="w-4 h-4 text-ge-green" />
+                                <span className="text-sm font-bold">Demande envoyée !</span>
+                            </>
+                        ) : (
+                            <>
+                                <Image className="w-4 h-4" priority src={TelephoneWhite} alt="Téléphone" />
+                                <span className="text-sm font-bold">Être rappelé</span>
+                            </>
                         )}
                     </div>
                 </ButtonPill>
-                :
-                <form className="flex bg-white flex-row items-center border border-ge-gray-3" onSubmit={(e) => { e.preventDefault(); handleSubmit(onSubmit)(e) }} id="callback-form">
-                    <div className='basis-1/2'>
-                        <div className="relative w-full">
-                            <div className="relative z-0 w-full group">
-                                <Controller
-                                    control={control}
-                                    name="phoneNumber"
-                                    render={({ field: { value, onChange } }) => (
-                                        <input
-                                            type="tel"
-                                            maxLength={14}
-                                            minLength={14}
-                                            value={value}
-                                            id="phoneNumber"
-                                            className={`${validated && 'pr-10'} block py-2.5 appearance-none cursor-pointer bg-transparent peer p-2.5 ${classNameProps}`}
-                                            placeholder=" "
-                                            autoFocus
-                                            onChange={onInputChange(onChange)}
-                                            required />
-                                    )}
+            ) : (
+                <form
+                    className="flex items-center gap-2 bg-white border border-ge-gray-3 rounded-full px-1 py-1 focus-within:border-ge-green transition-colors duration-200"
+                    onSubmit={(e) => { e.preventDefault(); handleSubmit(onSubmit)(e); }}
+                    id="callback-form"
+                >
+                    <Controller
+                        control={control}
+                        name="phoneNumber"
+                        render={({ field: { value, onChange } }) => (
+                            <div className="relative flex items-center">
+                                <Phone className={`w-3.5 h-3.5 ml-3 mr-1 shrink-0 ${invalid ? 'text-ge-red' : 'text-ge-gray-3'}`} />
+                                <input
+                                    type="tel"
+                                    maxLength={14}
+                                    minLength={14}
+                                    value={value}
+                                    id="phoneNumber"
+                                    className={`w-36 text-sm bg-transparent bg-white outline-none text-ge-gray-1 placeholder:text-ge-gray-3 py-1.5 ${invalid ? 'text-ge-red' : ''}`}
+                                    placeholder="06 00 00 00 00"
+                                    autoFocus
+                                    onChange={onInputChange(onChange)}
+                                    required
                                 />
-                                <label htmlFor="phoneNumber" className={`cursor-pointer absolute bg-white ml-4 text-sm ${invalid ? 'text-ge-red' : 'text-ge-gray-1'} duration-300 transform -translate-y-6 scale-75 top-3  origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>
-                                    N° de téléphone
-                                </label>
                             </div>
-                        </div>
-                    </div>
-                    <div className='basis-1/2 flex items-center content-center'>
-                        <ButtonPill padding="py-1 px-6" style="success" form="callback-form">
-                            <div className='px-5 flex items-center space-x-12 w-full justify-center lg:block lg:space-x-0'>
-                                <p className='align-middle'>
-                                    Envoyer
-                                    <Image
-                                        className="w-5 h-5 my-1 mr-3 float-left"
-                                        priority
-                                        src={TelephoneWhite}
-                                        alt="TelephoneWhite"
-                                    />
-                                </p>
-                            </div>
-                        </ButtonPill>
-                    </div>
+                        )}
+                    />
+                    <ButtonPill className='leading-[0px] mr-0' padding="py-2 px-4" style="success" form="callback-form">
+                        <span className="text-xs font-bold">Envoyer</span>
+                    </ButtonPill>
                 </form>
-
-            }
+            )}
         </div>
-    )
+    );
 }

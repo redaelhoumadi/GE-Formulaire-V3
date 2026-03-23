@@ -85,7 +85,7 @@ useEffect(() => {
 
         <div id="formRdvIntervention"></div>
 
-        <div onClick={handleScroll('formRdvIntervention')} className='xl:px-[11rem]'>
+        <div onClick={handleScroll('formRdvIntervention')} className='xl:px-[10rem]'>
           <InterventionTypeSelect
             control={control}
           />
@@ -107,7 +107,7 @@ useEffect(() => {
                 onClick={handleScroll('formRdvDateIntervention')}
               />
             </div>
-            <SectionMessage type='secondary' className='mx-4 gap-1 my-4 justify-center' justify={false}>
+            <SectionMessage type='secondary' className='' justify={false}>
               <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
               <p className='xl:text-sm text-xs font-light'><span className='font-black'>Service gratuit</span> où vous le souhaitez</p>
             </SectionMessage>
@@ -127,7 +127,7 @@ useEffect(() => {
                 fullWidth
               />
             </div>
-            <SectionMessage type='secondary' className='gap-1 my-4 justify-center' justify={false}>
+            <SectionMessage type='secondary' className='' justify={false}>
               <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
               <p className='xl:text-sm text-xs font-light'><span className='font-black'>Un véhicule de prêt</span> vous sera proposé <span className='font-black'>gratuitement</span></p>
             </SectionMessage>
@@ -167,7 +167,7 @@ useEffect(() => {
           </div>
         }
 
-        <p onClick={unknownCalendarClick} className={`${unknownCalendar ? 'text-ge-gray-1' : 'text-ge-gray-3'} text-sm text-center underline cursor-pointer mb-6`}>
+        <p onClick={unknownCalendarClick} className={`${unknownCalendar ? 'text-ge-gray-1' : 'text-ge-gray-3'} text-sm text-center underline cursor-pointer`}>
           Je ne connais pas mon emploi du temps
           <Image
             className="w-3 h-3 my-1 ml-1 inline"
@@ -177,7 +177,7 @@ useEffect(() => {
           />
         </p>
 
-        {watchData.creneau && <SectionMessage type='secondary' className='gap-1 justify-center py-2' justify={false}>
+        {watchData.creneau && <SectionMessage type='secondary' className='' justify={false}>
           <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
           <p className='xl:text-sm text-xs font-light'>Un horaire précis vous sera communiqué par <span className='font-black'>téléphone</span></p>
         </SectionMessage>

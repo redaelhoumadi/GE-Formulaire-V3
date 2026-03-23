@@ -22,11 +22,11 @@ export default function ImageHeader(props: ImageHeaderProps) {
                 priority
                 src={srcMobile || ''}
                 alt="Header rouge"
-                width={1700}
+                width={1700}w
                 height={400}
             />
             <Image
-                className="hidden xl:block w-30 rounded-md"
+                className="hidden mb-4 xl:block w-30 rounded-2xl border-ge-gray-4 shadow-[0_2px_16px_rgba(0,0,0,0.06),0_1px_4px_rgba(0,0,0,0.04)]"
                 priority
                 src={srcDesktop || ''}
                 alt="Header rouge"

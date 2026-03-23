@@ -1,105 +1,111 @@
 import { ReactNode } from 'react';
-import Image from 'next/image'
-import GreenCheck from "@public/images/components/GreenCheck.svg";
 import { Control, Controller } from 'react-hook-form';
+import { Phone } from 'lucide-react';
 
 interface PhoneInputProps {
-    /**
-     * Add particular classes
-     */
     className?: string;
-    /**
-     * Input placeholder
-     */
     placeholder?: string;
-    /**
-     * How large should the button be?
-     */
     size?: 'small' | 'medium' | 'large';
-    /**
-     * Button contents
-     */
     fullWidth?: boolean;
-    /*
-    * Inside the button
-    */
     label?: ReactNode;
-    /**
-     * Optional click handler
-     */
     onClick?: () => void;
-    /**
-     * Optional onchange handler
-     */
     onChange?: () => void;
-    /**
-     * Validate a form
-     */
     required?: boolean;
-    /**
-     * Button type
-     */
     name: string;
-    /**
-     * Button validated
-     */
     validated?: boolean;
-    /**
-     * Button invalid
-     */
     invalid?: boolean;
-    /**
-     * React-hook-form control
-     */
     control: Control<any>;
 }
 
-
 export default function PhoneInput(props: PhoneInputProps) {
-    const { required = false, control, onChange = () => { }, invalid, label, fullWidth, className = '', name, placeholder = '', validated = false } = props;
+    const {
+        required = false,
+        control,
+        onChange = () => {},
+        invalid,
+        label,
+        fullWidth,
+        className = '',
+        name,
+        validated = false,
+    } = props;
+
     const fullWidthProp = fullWidth ? 'w-full' : '';
-    let classNameProps = 'border border-ge-gray-3 text-ge-gray-1 text-sm md:text-base focus:ring-ge-gray-1 focus:border-ge-gray-1 rounded-md';
-    classNameProps = invalid ? 'border border-ge-red text-ge-gray-1 text-sm md:text-base focus:ring-ge-gray-1 focus:border-ge-gray-1 rounded-md' : classNameProps;
+
+    const borderClass = invalid
+        ? 'border-ge-red focus:border-ge-red focus:ring-ge-red/15'
+        : validated
+        ? 'border-ge-green focus:border-ge-green focus:ring-ge-green/15'
+        : 'border-ge-gray-3 focus:border-ge-green focus:ring-ge-green/15';
 
     const onInputChange = (onChangeController: any) => (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        let sanitazedValue: string = value.replace(/\D/g, '');
-        sanitazedValue = sanitazedValue.match(/.{1,2}/g)?.join(' ') || '';
-        onChangeController(sanitazedValue);
+        let sanitizedValue: string = value.replace(/\D/g, '');
+        sanitizedValue = sanitizedValue.match(/.{1,2}/g)?.join(' ') || '';
+        onChangeController(sanitizedValue);
         onChange();
     };
 
     return (
-        <div className="relative z-0 mb-6 w-full group mb-6">
-            {validated && <div className="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none">
-                <Image
-                    className="w-4 h-4 text-gray-500"
-                    priority
-                    src={GreenCheck}
-                    alt="Champ valide"
-                />
-            </div>
-            }
+        <div className={`relative mb-5 w-full group ${className}`}>
+            {/* Phone icon */}
+            {/* Validated check */}
+            {validated && (
+                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none z-10">
+                    <div className="check-pop w-5 h-5 rounded-full bg-ge-green flex items-center justify-center">
+                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                </div>
+            )}
             <Controller
                 control={control}
                 name={name}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange: onChangeCtrl } }) => (
                     <input
                         type="tel"
                         maxLength={14}
                         minLength={14}
-                        value={value}
+                        value={value || ''}
                         id={name}
-                        className={`pr-10 pt-4 pb-1 block py-2.5 appearance-none bg-transparent peer p-2.5 ${classNameProps} ${fullWidthProp}`}
+                        className={`
+                            ${borderClass}
+                            ${fullWidthProp}
+                            peer
+                            pl-4 pr-10 pt-5 pb-2
+                            bg-white
+                            border rounded-md
+                            text-ge-gray-1 text-sm
+                            transition-all duration-200
+                             focus:outline-none
+                            placeholder-transparent
+                        `}
                         placeholder=" "
-                        onChange={onInputChange(onChange)}
-                        required={required} />
+                        onChange={onInputChange(onChangeCtrl)}
+                        required={required}
+                    />
                 )}
             />
-            <label htmlFor={name} className="cursor-text absolute ml-3 text-sm text-ge-gray-1 duration-300 transform -translate-y-3 scale-75 top-3 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">
+
+            <label
+                htmlFor={name}
+                className={`
+                    cursor-text absolute left-4 top-3.5
+                    text-xs font-medium
+                    transition-all duration-200
+                    peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:font-normal
+                    peer-[&:not(:placeholder-shown)]:top-1.5 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:font-medium
+                    peer-focus:top-1.5 peer-focus:text-xs peer-focus:font-medium peer-focus:text-ge-green
+                    ${invalid ? 'text-ge-red' : validated ? 'text-ge-green' : 'text-ge-gray-3'}
+                    pointer-events-none
+                `}
+            >
                 {label}
-                {invalid && <span className="ml-2 text-xs text-ge-red font-medium">Champ invalide</span>}
+                {invalid && (
+                    <span className="ml-1.5 text-xs text-ge-red font-semibold">— Invalide</span>
+                )}
             </label>
         </div>
-    )
+    );
 }

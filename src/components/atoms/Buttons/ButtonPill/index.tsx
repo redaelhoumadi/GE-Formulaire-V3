@@ -1,67 +1,72 @@
 import { ReactNode } from 'react';
 
 interface ButtonPillProps {
-    /**
-     * Add particular classes
-     */
     className?: string;
-    /**
-     * How large should the button be?
-     */
     size?: 'small' | 'medium' | 'large';
-    /**
-     * Button contents
-     */
     fullWidth?: boolean;
-    /**
-     * Optional click handler
-     */
     onClick?: () => void;
-    /*
-    * Inside the button
-    */
     children: ReactNode;
-    /**
-     * Validate a form
-     */
     form?: string;
-    /**
-     * Button type
-     */
     type?: "button" | "submit" | "reset" | undefined;
-    /**
-     * Button style
-     */
     style?: "success" | "disabled" | undefined;
-    /**
-     * Button style
-     */
     padding?: string;
-    /**
-     * Hover style
-     */
     hover?: boolean;
 }
 
-
 export default function ButtonPill(props: ButtonPillProps) {
     const { children, padding, fullWidth, onClick, className = '', form, hover, style } = props;
-    // styles
-    let styleProp = 'text-ge-gray-3';
-    styleProp = style == "success" ? 'text-white bg-ge-green' : styleProp;
-    styleProp = style == "disabled" ? 'disabled text-white bg-ge-gray-2' : styleProp;
-    styleProp = hover ? styleProp + ' hover:bg-ge-green-2' : styleProp;
-    const paddingProp = padding ?? 'py-2.5';
+
+    let styleProp = '';
+
+    if (style === 'success') {
+        styleProp = `
+            bg-ge-green text-white
+            shadow-[0_4px_14px_rgba(78,173,57,0.35)]
+            hover:shadow-[0_6px_20px_rgba(78,173,57,0.50)]
+            hover:bg-[#44a032]
+            active:scale-[0.97]
+            transition-all duration-200
+        `;
+    } else if (style === 'disabled') {
+        styleProp = `
+            bg-ge-gray-2 text-white
+            cursor-not-allowed
+            opacity-70
+        `;
+    } else {
+        // ghost / back button
+        styleProp = `
+            text-ge-gray-3
+            hover:text-ge-gray-1
+            transition-colors duration-150
+        `;
+        if (hover) {
+            styleProp += ' hover:bg-ge-green-2';
+        }
+    }
+
+    const paddingProp = padding ?? 'py-3';
 
     return (
         <button
             onClick={onClick}
             type={form ? "submit" : "button"}
             form={form}
-            disabled={style == "disabled"}
-            className={`${fullWidth ? 'w-full' : ''} ${className}
-            ${styleProp} font-bold focus:outline-none rounded-full ${paddingProp} text-center mr-2`}>
+            disabled={style === "disabled"}
+            className={`
+                ${fullWidth ? 'w-full' : ''}
+                ${className}
+                ${styleProp}
+                font-bold
+                focus:outline-none
+                rounded-full
+                ${paddingProp}
+                text-center
+                mr-2
+                select-none
+            `}
+        >
             {children}
         </button>
-    )
+    );
 }

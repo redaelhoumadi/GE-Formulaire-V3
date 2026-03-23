@@ -2,37 +2,137 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+    --foreground-rgb: 50, 51, 51;
+    --background-start-rgb: 249, 249, 249;
+    --background-end-rgb: 255, 255, 255;
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    /* Shadows */
+    --shadow-card: 0 2px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+    --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.10), 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-btn: 0 4px 14px rgba(78, 173, 57, 0.35);
+    --shadow-btn-hover: 0 6px 20px rgba(78, 173, 57, 0.50);
+  }
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-/* targeting only ios browser */
-/* @supports (-webkit-touch-callout: none) {
-  html {
-    scroll-behavior: auto;
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-start-rgb));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Progress Bar ─── */
+.percentBar {
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Step Enter Animation ─── */
+@keyframes stepFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
-} */
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-enter {
+  animation: stepFadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Staggered children */
+.step-enter > * {
+  animation: stepFadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.step-enter > *:nth-child(1) { animation-delay: 0.05s; }
+.step-enter > *:nth-child(2) { animation-delay: 0.12s; }
+.step-enter > *:nth-child(3) { animation-delay: 0.19s; }
+.step-enter > *:nth-child(4) { animation-delay: 0.26s; }
+
+/* ─── Input Focus Glow ─── */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4ead39 !important;
+}
+
+/* ─── Floating Label Fix ─── */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+/* ─── Custom Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #b3b2b2;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4ead39;
+}
+
+/* ─── Selection color ─── */
+::selection {
+  background: rgba(78, 173, 57, 0.2);
+  color: #323333;
+}
+
+/* ─── Nav Progress Pulse on active ─── */
+@keyframes navActivePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+/* ─── Button Press Feedback ─── */
+button:active:not(:disabled) {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* ─── Card Hover Lift ─── */
+.card-hoverable {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* ─── Shimmer Skeleton ─── */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #eaeae9 25%, #f5f5f5 50%, #eaeae9 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+/* ─── Check mark animation ─── */
+@keyframes checkPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.check-pop {
+  animation: checkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}

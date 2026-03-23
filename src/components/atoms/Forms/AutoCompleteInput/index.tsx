@@ -1,83 +1,50 @@
-import Image from "next/image";
 import { ReactNode, useState } from 'react';
 import { useRef, useEffect } from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 import { getCityData } from "@/helpers/city-data";
 import { getAddressData } from "@/helpers/address-data";
-import GreenCheck from "@public/images/components/GreenCheck.svg";
+import { MapPin, Navigation } from 'lucide-react';
 import AutoCompleteListInput from "./list";
 
 interface AutoCompleteInputProps {
-    /**
-     * Add particular classes
-     */
     className?: string;
-    /**
-     * How large should the button be?
-     */
     size?: 'small' | 'medium' | 'large';
-    /**
-     * Button contents
-     */
     fullWidth?: boolean;
-    /*
-    * Inside the button
-    */
     label?: ReactNode;
-    /**
-     * Optional click handler
-     */
     onClick?: () => void;
-    /**
-     * Validate a form
-     */
     required?: boolean;
-    /**
-     * Button type
-     */
     name: string;
-    /**
-     * React-hook-form registration
-     */
     register?: any;
-    /**
-     * React-hook-form control
-    */
     control: Control<any>;
-    /**
- * input max length
- */
     maxLength?: number;
-    /**
-* Button validated
-*/
     validated?: boolean;
-    /**
-* Input placeholder
-*/
     placeholder?: string;
-    /**
- * Button invalid
- */
     invalid?: boolean;
-    /**
-     * Research type
-     */
     researchType?: 'city' | 'address';
 }
 
-// 'ring-blue-600'
-export default function AutoCompleteInputInput(props: AutoCompleteInputProps) {
-    const { required, invalid, control, validated, maxLength, label, fullWidth, researchType = 'city', onClick = () => { }, name } = props;
-    const fullWidthProp = fullWidth ? 'w-full' : '';
-    let classNameProps = 'border border-ge-gray-3 text-ge-gray-1 text-xs: text-base focus:ring-ge-gray-1 focus:border-ge-gray-1 rounded-md';
-    classNameProps = invalid ? 'border border-ge-red text-ge-gray-1 text-xs: text-base focus:ring-ge-gray-1 focus:border-ge-gray-1 rounded-md' : classNameProps;
+export default function AutoCompleteInput(props: AutoCompleteInputProps) {
+    const {
+        required,
+        invalid,
+        control,
+        validated,
+        maxLength,
+        label,
+        fullWidth,
+        researchType = 'city',
+        onClick = () => {},
+        name,
+        placeholder = '',
+    } = props;
 
-    const researchFunction = researchType == 'city' ? getCityData : getAddressData;
-    const inputRef = useRef<HTMLInputElement>(null);
+    const fullWidthProp = fullWidth ? 'w-full' : '';
+    const researchFunction = researchType === 'city' ? getCityData : getAddressData;
+    const inputRef = useRef<HTMLDivElement>(null);
     const [toggle, setToggle] = useState(false);
     const [internalValue, setInternalValue] = useState<string>('');
     const [data, setData] = useState<string[]>([]);
+
     const switchToggle = () => {
         setToggle(!toggle);
         onClick();
@@ -90,11 +57,8 @@ export default function AutoCompleteInputInput(props: AutoCompleteInputProps) {
             }
         };
         window.addEventListener("mousedown", handleOutSideClick);
-        return () => {
-            window.removeEventListener("mousedown", handleOutSideClick);
-        };
+        return () => window.removeEventListener("mousedown", handleOutSideClick);
     }, [inputRef]);
-
 
     function debounce(fn: any, delay: any) {
         let timeoutId: any;
@@ -110,55 +74,106 @@ export default function AutoCompleteInputInput(props: AutoCompleteInputProps) {
             const dataRes: string[] = await researchFunction(text);
             setData(dataRes);
         }
-    }
+    };
 
-    const debouncedFunction = debounce(refreshResearch, 1000);
+    const debouncedFunction = debounce(refreshResearch, 600);
+
+    const borderClass = invalid
+        ? 'border-ge-red focus:border-ge-red '
+        : validated && internalValue !== ''
+        ? 'border-ge-green focus:border-ge-green '
+        : 'border-ge-gray-3 focus:border-ge-green ';
+
+    const IconComponent = researchType === 'address' ? Navigation : MapPin;
 
     return (
-        <div className="relative my-3 w-full group" ref={inputRef}>
-            {(validated && internalValue != '') && <div className="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none">
-                <Image
-                    className="w-4 h-4 text-gray-500"
-                    priority
-                    src={GreenCheck}
-                    alt="Champ valide"
-                />
+        <div className={`relative mb-5 ${fullWidthProp}`} ref={inputRef}>
+            {/* Icon */}
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none z-10">
+                <IconComponent className={`w-4 h-4 ${invalid ? 'text-ge-red' : validated && internalValue ? 'text-ge-green' : 'text-ge-gray-3'}`} />
             </div>
-            }
+
+            {/* Validated check */}
+            {validated && internalValue !== '' && (
+                <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none z-10">
+                    <div className="check-pop w-5 h-5 rounded-full bg-ge-green flex items-center justify-center">
+                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                </div>
+            )}
+
             <Controller
                 control={control}
                 name={name}
-                render={({ field: { value, onChange, onBlur }, fieldState: { invalid, isDirty, isTouched } }) => {
-                    return (<>
+                render={({ field: { value, onChange, onBlur } }) => (
+                    <>
                         <input
                             maxLength={maxLength}
                             type="text"
                             id={name}
-                            value={value}
-                            className={`pr-10 pt-4 pb-1 block py-2.5 appearance-none bg-transparent peer p-2.5 ${classNameProps} ${fullWidthProp}`}
+                            value={value || ''}
+                            className={`
+                                ${borderClass}
+                                ${fullWidthProp}
+                                peer
+                                pl-10 pr-10 pt-5 pb-2
+                                bg-white
+                                border rounded-md
+                                text-ge-gray-1 text-sm
+                                transition-all duration-200
+                                focus:outline-none
+                                placeholder-transparent
+                            `}
                             placeholder=" "
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                 onChange(e);
                                 debouncedFunction(e);
+                                setToggle(true);
                             }}
                             onBlur={() => {
-                                setInternalValue(value);
-                                onBlur();
+                                // Délai pour laisser le onClick du li s'exécuter avant de fermer
+                                setTimeout(() => {
+                                    setInternalValue(value);
+                                    setToggle(false);
+                                    onBlur();
+                                }, 150);
                             }}
-                            onClick={switchToggle}
-                            required={required} />
-                        <AutoCompleteListInput toggle={toggle} values={data} onChange={
-                            (element: any) => {
+                            onClick={() => setToggle(true)}
+                            required={required}
+                        />
+
+                        <AutoCompleteListInput
+                            toggle={toggle}
+                            values={data}
+                            onChange={(element: any) => {
                                 onChange(element);
-                                switchToggle();
-                            }} />
-                    </>)
-                }}
+                                setInternalValue(element);
+                                setToggle(false);
+                                onClick();
+                            }}
+                        />
+                    </>
+                )}
             />
-            <label htmlFor={name} className="cursor-text absolute ml-3 text-sm text-ge-gray-1 duration-300 transform -translate-y-3 scale-75 top-3 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3">
+
+            <label
+                htmlFor={name}
+                className={`
+                    cursor-text absolute left-10 top-3.5
+                    text-xs font-medium
+                    transition-all duration-200
+                    peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:font-normal
+                    peer-[&:not(:placeholder-shown)]:top-1.5 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:font-medium
+                    peer-focus:top-1.5 peer-focus:text-xs peer-focus:font-medium peer-focus:text-ge-green
+                    ${invalid ? 'text-ge-red' : validated && internalValue ? 'text-ge-green' : 'text-ge-gray-3'}
+                    pointer-events-none
+                `}
+            >
                 {label}
-                {invalid && <span className="ml-2 text-xs text-ge-red font-medium">Champ invalide</span>}
+                {invalid && <span className="ml-1.5 text-xs text-ge-red font-semibold">— Invalide</span>}
             </label>
         </div>
-    )
+    );
 }

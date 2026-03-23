@@ -19,7 +19,7 @@ const mapPaths = new Map([
         title: 'Diagnostic',
         stepNo: 1,
         step: '1/4',
-        stepPercent: '40%',
+        stepPercent: '25%',
         headerImgMobileSrc: '/images/reusable/image-header-mobile-1.jpg',
         headerImgDesktopSrc: '/images/reusable/image-header-pc-1.jpg'
     }],
@@ -27,7 +27,7 @@ const mapPaths = new Map([
         title: 'Véhicule',
         stepNo: 2,
         step: '2/4',
-        stepPercent: '70%',
+        stepPercent: '50%',
         headerImgMobileSrc: '/images/reusable/image-header-mobile-2.jpg',
         headerImgDesktopSrc: '/images/reusable/image-header-pc-2.jpg'
     }],
@@ -35,7 +35,7 @@ const mapPaths = new Map([
         title: 'Rendez-vous',
         stepNo: 3,
         step: '3/4',
-        stepPercent: '80%',
+        stepPercent: '75%',
         headerImgMobileSrc: '/images/reusable/image-header-mobile-3.jpg',
         headerImgDesktopSrc: '/images/reusable/image-header-pc-3.jpg'
     }],
@@ -68,39 +68,11 @@ export default function Layout({ children }: any) {
     const activeStep = mapPaths.get(pathname);
     const maxStep = useStore(useFormStore, (state) => state.maxStep) || -1;
 
-    /* useEffect(() => {
-        const disableRightClick = (e: any) => {
-            e.preventDefault();
-        };
-        document.addEventListener('contextmenu', disableRightClick);
-
-        return () => {
-            document.removeEventListener('contextmenu', disableRightClick);
-        };
-    }, []);
-
-    useEffect(() => {
-        const disableCopyCutPaste = (e: any) => {
-            e.preventDefault();
-            console.log('Cette action est désactivée sur ce site.');
-        };
-
-        document.addEventListener('copy', disableCopyCutPaste);
-        document.addEventListener('cut', disableCopyCutPaste);
-        document.addEventListener('paste', disableCopyCutPaste);
-
-        return () => {
-            document.removeEventListener('copy', disableCopyCutPaste);
-            document.removeEventListener('cut', disableCopyCutPaste);
-            document.removeEventListener('paste', disableCopyCutPaste);
-        };
-    }, []); */
-
     const stepDiagnostic = useStore(useFormStore, (state) => state.stepDiagnostic);
 
-// show aside seulement si l'utilisateur a fait le choix du début
-const showAside =
-  Boolean(stepDiagnostic) && activeStep?.stepNo !== 5;
+    // show aside seulement si l'utilisateur a fait le choix du début
+    const showAside =
+        Boolean(stepDiagnostic) && activeStep?.stepNo !== 5;
 
 
     if ((activeStep && activeStep.stepNo != 1) && (maxStep == -1 || (activeStep && activeStep.stepNo > maxStep + 1))) {
@@ -108,59 +80,50 @@ const showAside =
     }
 
     return (
-        <main className="min-h-screen xl:items-center xl:pt-28 bg-white xl:bg-ge-gray-5">
+        <main className="min-h-screen bg-ge-gray-5">
             <ScrollUp />
-            <div className="z-10 xl:px-52 bg-ge-gray-5">
-                {activeStep?.stepNo != 5 && <NavBar
-                    stepNo={activeStep?.stepNo}
-                    step={activeStep?.step}
-                    stepPercent={activeStep?.stepPercent}
-                    title={activeStep?.title}
-                />
-                }
-                
-                <div className="xl:mx-auto xl:max-w-7xl">
-      
-  <div
-    className="mt-14 xl:mt-0 flex xl:flex-row xl:gap-3 flex-col-reverse"
-  >
-    {/* MAIN CONTENT */}
-    <div className="xl:basis-3/4">
-      <div className="xl:container mx-5 xl:mx-auto">
-        {children}
-      </div>
-    </div>
 
-    {/* ASIDE */}
-    
-      <aside className="xl:mt-4 xl:mx-4 xl:top-0 xl:basis-1/4 xl:px-1 ">
-        <div className="sticky top-[8rem] flex flex-col gap-4">
-          {showAside &&<RecapInterventionCard />}
+            <div className="z-10 bg-ge-gray-5">
+                {activeStep?.stepNo != 5 && (
+                    <NavBar
+                        stepNo={activeStep?.stepNo}
+                        step={activeStep?.step}
+                        stepPercent={activeStep?.stepPercent}
+                        title={activeStep?.title}
+                    />
+                )}
 
-          {/*<div className="flex flex-row items-center gap-4 bg-white py-8 rounded-md justify-center px-4">
-            <Image className="w-16 h-18" src={Chronometre} alt="Chronometre" />
-            <span className="font-extrabold text-ge-gray-1 text-l/4">
-              Prenez Rendez-vous <br />
-              en{" "}
-              <span className="underline font-black text-2xl italic decoration-red-500">
-                2 minutes !
-              </span>
-            </span>
-          </div>*/}
-          <div className="">
-      <ImageHeader
-                                srcMobile={activeStep?.headerImgMobileSrc}
-                                srcDesktop={activeStep?.headerImgDesktopSrc}
-                            />
-    </div>
-          
-        </div>
-      </aside>
-    
-    
-  </div>
-</div>
+                {/* ── Page content ── */}
+                <div className="xl:px-52 pt-[72px] xl:pt-28">
+                    <div className="xl:mx-auto xl:max-w-7xl">
+                        <div className="flex xl:flex-row xl:gap-5 flex-col-reverse">
+
+                            {/* MAIN CONTENT */}
+                            <div className="xl:flex-1 xl:min-w-0 step-enter">
+                                <div className="mx-4 xl:mx-auto xl:container pb-8">
+                                    {children}
+                                </div>
+                            </div>
+
+                            {/* ASIDE */}
+                            <aside className="xl:mt-4 xl:mx-2 xl:w-[300px] xl:shrink-0 xl:px-1">
+                                <div className="sticky top-[7rem] flex flex-col gap-4">
+                                    {showAside && (
+                                        <RecapInterventionCard />
+                                    )}
+                                    {/*<div>
+                                        <ImageHeader
+                                            srcMobile={activeStep?.headerImgMobileSrc}
+                                            srcDesktop={activeStep?.headerImgDesktopSrc}
+                                        />
+                                    </div>*/}
+                                </div>
+                            </aside>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-
-        </main>)
+        </main>
+    );
 }

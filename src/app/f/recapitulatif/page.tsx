@@ -1,20 +1,15 @@
 "use client";
 import ButtonPill from '@/components/atoms/Buttons/ButtonPill';
 import Image from 'next/image';
-
-// SVGs
-import GreenCheck from "@public/images/components/GreenCheck.svg";
 import TelephoneWhite from '@public/images/components/TelephoneWhite.svg';
 import SectionHeader from '@/components/atoms/SectionHeader';
-import SectionMessage from '@/components/atoms/SectionMessage';
-import { CheckCircle2 } from "lucide-react";
-import { CheckCircle } from "lucide-react";
-
-// Forms
-import ClickableCar from '@/components/atoms/Forms/ClickableCar';
-import ClickableCarPc from '@/components/atoms/Forms/ClickableCarPc';
 import Card from '@/components/atoms/Card';
 import Link from 'next/link';
+import { CheckCircle2, Car, Shield, Settings, MapPin, CalendarDays, User, Phone } from 'lucide-react';
+
+// clickable car
+import ClickableCar from '@/components/atoms/Forms/ClickableCar';
+import ClickableCarPc from '@/components/atoms/Forms/ClickableCarPc';
 
 // store
 import useFormStore, { FormState } from '@/store/form';
@@ -22,220 +17,193 @@ import { useEffect } from 'react';
 
 
 const formatDate = (date: Date | undefined) => {
-  if (!date)
-    return "";
-  const dateObj = new Date(date);
-  return `${dateObj.getDate()}/${dateObj.getMonth() + 1}/${dateObj.getFullYear()}`;
-}
+    if (!date) return "";
+    const dateObj = new Date(date);
+    return `${String(dateObj.getDate()).padStart(2, '0')}/${String(dateObj.getMonth() + 1).padStart(2, '0')}/${dateObj.getFullYear()}`;
+};
+
+const RecapSection = ({
+    icon,
+    title,
+    items,
+}: {
+    icon: React.ReactNode;
+    title: string;
+    items: (string | undefined | null)[];
+}) => {
+    const filtered = items.filter(Boolean) as string[];
+    if (filtered.length === 0) return null;
+
+    return (
+        <div className="flex gap-3 py-3 border-b border-ge-gray-4 last:border-0">
+            <div className="w-8 h-8 rounded-full bg-ge-green/10 flex items-center justify-center shrink-0 mt-0.5">
+                {icon}
+            </div>
+            <div>
+                <p className="text-[10px] font-bold text-ge-gray-3 uppercase tracking-wider mb-1">{title}</p>
+                {filtered.map((item, i) => (
+                    <p key={i} className="text-sm text-ge-gray-1 font-medium leading-snug">{item}</p>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const Advantage = ({ text }: { text: string }) => (
+    <div className="flex items-center gap-2 bg-ge-green/5 rounded-md px-3 py-2.5">
+        <CheckCircle2 className="w-4 h-4 text-ge-green shrink-0" />
+        <p className="text-sm text-ge-gray-1 font-medium">{text}</p>
+    </div>
+);
 
 export default function RecapitulatifPage() {
-  const submittedData: FormState = useFormStore();
+    const submittedData: FormState = useFormStore();
 
-  // supprimer les données du formulaire déjà présent
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.removeItem('glass-express-rdv-storage');
-    }
-  }, []);
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.localStorage) {
+            localStorage.removeItem('glass-express-rdv-storage');
+        }
+    }, []);
 
+    const prenom = submittedData.stepCoordonnees?.nom_prenom?.split(' ')[0] || '';
+    const isAgence = submittedData.stepRendezVous?.type === "En agence";
 
+    return (
+        <>
+            {/* ── Confirmation Nav ── */}
+            <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-ge-gray-4 shadow-sm">
+                <div className="flex items-center justify-center py-4 px-6">
+                    <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full bg-ge-green flex items-center justify-center">
+                            <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <h1 className="font-bold text-ge-gray-1 text-lg">Récapitulatif de votre RDV</h1>
+                    </div>
+                </div>
+                {/* Full green bar */}
+                <div className="h-1 bg-ge-green w-full" />
+            </nav>
 
-  return (<>
-    <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4">
-        <div className="font-bold text-ge-gray-3 items-center w-auto" id="navbar-sticky">
-          <h1 className="text-center text-xl">Récapitulatif de votre RDV</h1>
-        </div>
-      </div>
-      <div className="w-full z-10 xl:container xl:px-52 xl:mx-auto">
-        <div className='bg-ge-gray-4 rounded-r-full rounded-l-full'>
-          <div className={`bg-ge-green h-1 rounded-r-full rounded-l-full w-full`}></div>
-        </div>
-      </div>
-    </nav>
+            <div className="pt-20">
 
-    {/* CONFIRMATION */}
-    <Card>
-      <SectionMessage className='block xl:hidden my-6 font-extrabold' type='primary'>
-        <CheckCircle className="h-10 w-16 text-ge-green shrink-0" />
-        Merci {submittedData.stepCoordonnees?.nom_prenom}, nous avons bien reçu votre demande
-      </SectionMessage>
+                {/* ── Hero confirmation ── */}
+                <div className="bg-ge-green/5 border border-ge-green/20 rounded-2xl mx-4 xl:mx-0 mt-4 px-6 py-6 flex flex-col xl:flex-row items-center gap-4">
+                    {/* Big check */}
+                    <div className="w-14 h-14 rounded-full bg-ge-green flex items-center justify-center shrink-0 shadow-[0_4px_14px_rgba(78,173,57,0.35)]">
+                        <CheckCircle2 className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="text-center xl:text-left">
+                        <h2 className="font-extrabold text-ge-gray-1 text-xl md:text-2xl leading-tight">
+                            {prenom ? `Merci ${prenom} !` : "Merci !"}
+                        </h2>
+                        <p className="text-ge-gray-3 text-sm mt-1">
+                            Votre demande a bien été enregistrée. Un conseiller va vous appeler pour confirmer votre rendez-vous.
+                        </p>
+                    </div>
+                </div>
 
-      <div className='hidden xl:block my-1'>
-        <SectionHeader>
-          Un conseiller va vous appeler pour organiser votre rendez-vous
-        </SectionHeader>
-      </div>
+                {/* ── Main card : car + recap ── */}
+                <Card className="mt-4">
+                    <div className="xl:grid xl:grid-cols-3 xl:gap-6 items-start">
 
+                        {/* Car visual */}
+                        <div className="flex justify-center mb-4 xl:mb-0">
+                            <div className="scale-110 block xl:hidden">
+                                <ClickableCar value={submittedData.stepDiagnostic?.vitrage} disabled={true} />
+                            </div>
+                            <div className="scale-125 justify-center hidden xl:flex">
+                                <ClickableCarPc value={submittedData.stepDiagnostic?.vitrage} disabled={true} />
+                            </div>
+                        </div>
 
+                        {/* Recap details */}
+                        <div className="col-span-2 divide-y divide-ge-gray-4">
+                            <RecapSection
+                                icon={<Settings className="w-4 h-4 text-ge-green" />}
+                                title="Diagnostic"
+                                items={[
+                                    submittedData.stepDiagnostic?.vitrage,
+                                    submittedData.stepDiagnostic?.dommage,
+                                ]}
+                            />
+                            <RecapSection
+                                icon={<Car className="w-4 h-4 text-ge-green" />}
+                                title="Véhicule & Assurance"
+                                items={[
+                                    submittedData.stepVehicule?.marque_modele_vehicule
+                                        ? `${submittedData.stepVehicule.marque_modele_vehicule}${submittedData.stepVehicule.immatriculation ? ` — ${submittedData.stepVehicule.immatriculation}` : ''}`
+                                        : submittedData.stepVehicule?.immatriculation,
+                                    submittedData.stepVehicule?.assurance,
+                                ]}
+                            />
+                            <RecapSection
+                                icon={<MapPin className="w-4 h-4 text-ge-green" />}
+                                title="Lieu d'intervention"
+                                items={[
+                                    submittedData.stepRendezVous?.type,
+                                    submittedData.stepRendezVous?.adresse || submittedData.stepRendezVous?.ville,
+                                ]}
+                            />
+                            <RecapSection
+                                icon={<CalendarDays className="w-4 h-4 text-ge-green" />}
+                                title="Date & Créneau"
+                                items={[
+                                    [
+                                        formatDate(submittedData.stepRendezVous?.date_souhaitee),
+                                        submittedData.stepRendezVous?.creneau?.toLowerCase()
+                                    ].filter(Boolean).join(', ') || null,
+                                ]}
+                            />
+                            <RecapSection
+                                icon={<User className="w-4 h-4 text-ge-green" />}
+                                title="Vos coordonnées"
+                                items={[
+                                    submittedData.stepCoordonnees?.nom_prenom,
+                                    submittedData.stepCoordonnees?.telephone?.replace(/^0/, '+33 '),
+                                    submittedData.stepCoordonnees?.email,
+                                ]}
+                            />
+                        </div>
+                    </div>
+                </Card>
 
-      <div className="xl:grid xl:grid-cols-3 xl:gap-x-4">
-        <div>
-          <div className="scale-[1.10]">
-            <div className='block xl:hidden'>
-              <ClickableCar
-                value={submittedData.stepDiagnostic?.vitrage}
-                disabled={true}
-              />
+                {/* ── Avantages ── */}
+                <Card>
+                    <SectionHeader className="mb-4">Vos avantages inclus</SectionHeader>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
+                        <Advantage text="Aucun frais ni démarches" />
+                        <Advantage text={isAgence ? "Véhicule de prêt gratuit" : "Déplacement gratuit"} />
+                        <Advantage text="Données non partagées" />
+                    </div>
+                </Card>
+
+                {/* ── Contact ── */}
+                <Card>
+                    <SectionHeader className="mb-4">Une question ? Nous sommes là</SectionHeader>
+                    <div className="flex justify-center mt-2">
+                        <Link href="tel:0800100244">
+                            <ButtonPill style="success" className="px-10">
+                                <div className="flex items-center gap-2">
+                                    <Image className="w-4 h-4" priority src={TelephoneWhite} alt="Téléphone" />
+                                    <span>Nous appeler</span>
+                                </div>
+                            </ButtonPill>
+                        </Link>
+                    </div>
+                </Card>
+
+                {/* ── Back ── */}
+                <div className="flex justify-center mb-8 mt-2">
+                    <div onClick={submittedData.reset}>
+                        <ButtonPill className="text-sm px-8">
+                            ← Retour à l&apos;accueil du site
+                        </ButtonPill>
+                    </div>
+                </div>
+
             </div>
-          </div>
-          <div className="scale-[1.30] justify-center my-10 hidden xl:flex">
-            <ClickableCarPc
-              value={submittedData.stepDiagnostic?.vitrage}
-              disabled={true}
-            />
-          </div>
-        </div>
-
-
-        <div className='xl:hidden'>
-          <SectionHeader className='my-8'>
-            Un conseiller va vous appeler pour organiser votre rendez-vous
-          </SectionHeader>
-        </div>
-
-        {/* RECAPITULATIF */}
-
-        <div className="col-span-2 grid grid-cols-1 xl:grid-cols-2">
-
-          <div className='col-span-2 hidden xl:block '>
-            <SectionMessage className='mt-6 mb-2 font-extrabold' type='primary'>
-              <CheckCircle className="h-10 w-16 text-ge-green shrink-0" />
-              Merci {submittedData.stepCoordonnees?.nom_prenom}, nous avons bien reçu votre demande
-            </SectionMessage>
-          </div>
-
-          <div className="mx-auto col-span-2 grid grid-cols-2 gap-4 mb-6">
-            <div className='flex'>
-              <div className=''>
-                <header className={`pl-2 font-bold text-ge-gray-3 text-md mb-1`}>
-                  Diagnostic
-                </header>
-                <ul className="pl-2 text-ge-gray-2 list-none">
-                  <li>{submittedData.stepDiagnostic?.vitrage}</li>
-                  {submittedData.stepDiagnostic?.dommage && <li>{submittedData.stepDiagnostic.dommage}</li>}
-                </ul>
-              </div>
-            </div>
-
-            <div className='flex'>
-              <div>
-                <header className={`pl-2 font-bold text-ge-gray-3 text-md mb-1`}>
-                  Véhicule
-                </header>
-                <ul className="pl-2 text-ge-gray-2 list-none">
-                  {(submittedData.stepVehicule?.marque_modele_vehicule && submittedData.stepVehicule?.immatriculation) && <li>{submittedData.stepVehicule?.marque_modele_vehicule}, {submittedData.stepVehicule?.immatriculation}</li>}
-                  {(!submittedData.stepVehicule?.marque_modele_vehicule && submittedData.stepVehicule?.immatriculation) && <li>{submittedData.stepVehicule?.immatriculation}</li>}
-                  {submittedData.stepVehicule?.assurance && <li>{submittedData.stepVehicule?.assurance}</li>}
-                </ul>
-              </div>
-            </div>
-
-            <div className='flex'>
-              <div>
-                <header className={`pl-2 font-bold text-ge-gray-3 text-md mb-1`}>
-                  Rendez-vous
-                </header>
-                <ul className="pl-2 text-ge-gray-2 list-none">
-                  <li>{submittedData.stepRendezVous?.type}</li>
-                  {submittedData.stepRendezVous?.adresse && <li>{submittedData.stepRendezVous.adresse}</li>}
-                  <li>{submittedData.stepRendezVous?.ville}</li>
-                  <li>{formatDate(submittedData.stepRendezVous?.date_souhaitee)}{submittedData.stepRendezVous?.creneau && `, ${submittedData.stepRendezVous?.creneau?.toLowerCase()}`}</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className='flex'>
-              <div>
-                <header className={`pl-2 font-bold text-ge-gray-3 text-md mb-1`}>
-                  Coordonnées
-                </header>
-                <ul className="pl-2 text-ge-gray-2 list-none">
-                  <li>{submittedData.stepCoordonnees?.nom_prenom}</li>
-                  <li>{submittedData.stepCoordonnees?.telephone?.replace(/^0/, '+33')}</li>
-                  <li>{submittedData.stepCoordonnees?.email}</li>
-                  <li>{submittedData.stepCoordonnees?.ville}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </Card>
-
-    <div className=''>
-    {/* AVANTAGES */}
-    <Card>
-      <SectionHeader>
-        Vos avantages
-      </SectionHeader>
-      <div className="grid grid-cols-3 gap-x-6 gap-y-2 my-6">
-        <div className="flex items-center space-x-1">
-          <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
-          <p className='xl:text-xs text-ge-gray-3 text-[9px]'>Aucun frais ni démarches</p>
-        </div>
-        <div className="flex items-center space-x-1">
-          <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
-          <p className='xl:text-xs text-ge-gray-3 text-[10px]'>
-            {submittedData.stepRendezVous?.type == "En agence" ? "Véhicule de prêt gratuit" : "Déplacement gratuit"}
-          </p>
-        </div>
-        <div className="flex items-center space-x-1">
-          <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
-          <p className='xl:text-xs text-ge-gray-3 text-[10px]'>Données non partagées</p>
-        </div>
-      </div>
-    </Card>
-
-    {/* INFORMATIONS COMPLEMENTAIRES */}
-    <Card>
-      <SectionHeader>
-        Des questions ? nos conseillers sont là pour vous
-      </SectionHeader>
-
-      {/* NAVIGATION BUTTONS */}
-      <div className='flex justify-center'>
-        <Link href="tel:0800100244" className='mt-8'>
-          <ButtonPill style="success" className="text-xs xl:text-base mb-2">
-            <div className='px-5 flex items-center space-x-12 w-full justify-center xl:block xl:space-x-0'>
-              <p className='align-middle xl:hidden'>
-                Nous appeler
-                <Image
-                  className="w-5 h-5 ml-3 float-right"
-                  priority
-                  src={TelephoneWhite}
-                  alt="TelephoneWhite"
-                />
-              </p>
-              <p className='align-middle hidden xl:block'>
-                Nous appeler
-                <Image
-                  className="w-5 h-5 mr-3 float-left"
-                  priority
-                  src={TelephoneWhite}
-                  alt="TelephoneWhite"
-                />
-              </p>
-            </div>
-
-          </ButtonPill>
-        </Link>
-      </div>
-
-    </Card>
-    </div>
-
-    <div className='flex justify-center'>
-      {/* TODO : remove OnClick (for development purpose) */}
-      {/* <Link href="/" className='mb-3' onClick={submittedData.reset}> */}
-      <div className='mb-3' onClick={submittedData.reset}>
-        <ButtonPill className="text-sm xl:text-base mb-2">&lt; Retour à l&apos;accueil du site</ButtonPill>
-      </div>
-      {/* </Link> */}
-    </div>
-
-  </>
-  )
+        </>
+    );
 }

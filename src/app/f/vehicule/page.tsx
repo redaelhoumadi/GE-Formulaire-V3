@@ -362,17 +362,17 @@ useEffect(() => {
             onClick={setDefaultAssurance}
             className={`${
               data.assurance == "Autre / Je ne sais pas" ? "text-ge-gray-1" : "text-ge-gray-3"
-            } text-sm text-center underline cursor-pointer mb-6`}
+            } text-sm text-center underline cursor-pointer`}
           >
             Je ne connais pas mon assurance
-            <Image className="w-3 h-3 my-1 ml-1 inline" priority src={ChevronReplie} alt="ChevronReplie" />
+            <Image className="w-3 h-3 ml-1 inline" priority src={ChevronReplie} alt="ChevronReplie" />
           </p>
 
           {/* MESSAGE ASSURANCES */}
           {data.assurance && (
             <div className="">
               <div className="">
-                <SectionMessage type="secondary" className="xl:mx-[8.3rem] my-8 gap-1 justify-center py-2 rounded-md">
+                <SectionMessage type="secondary" className="">
                   
                   <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />
                   <p className="xl:text-sm text-xs font-light">
@@ -420,7 +420,7 @@ useEffect(() => {
 
               {/* MESSAGE INFOS VEHICULE */}
               {vehicule && (
-                <div className="flex mb-3 xl:mb-6 justify-center">
+                <div className="">
                   <div>
                     <div className="flex">
                       <SectionMessage type="secondary" className="gap-1" justify={false}>

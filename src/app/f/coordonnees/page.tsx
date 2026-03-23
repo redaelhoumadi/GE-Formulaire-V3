@@ -128,7 +128,7 @@ useEffect(() => {
             label='Adresse e-mail'
             name='email'
             invalid={errors["email"] ? true : false}
-            // validated={(touchedFields["email"] && !errors["email"]) ? true : false}
+            validated={(touchedFields["email"] && !errors["email"]) ? true : false}
             register={register}
             placeholder='Votre adresse e-mail'
             fullWidth

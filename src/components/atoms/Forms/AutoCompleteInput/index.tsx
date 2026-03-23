@@ -87,7 +87,7 @@ export default function AutoCompleteInput(props: AutoCompleteInputProps) {
     const IconComponent = researchType === 'address' ? Navigation : MapPin;
 
     return (
-        <div className={`relative mb-5 ${fullWidthProp}`} ref={inputRef}>
+        <div className={`relative ${fullWidthProp}`} ref={inputRef}>
             {/* Icon */}
             <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none z-10">
                 <IconComponent className={`w-4 h-4 ${invalid ? 'text-ge-red' : validated && internalValue ? 'text-ge-green' : 'text-ge-gray-3'}`} />

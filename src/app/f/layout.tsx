@@ -84,13 +84,30 @@ export default function Layout({ children }: any) {
             <ScrollUp />
 
             <div className="z-10 bg-ge-gray-5">
-                {activeStep?.stepNo != 5 && (
+                {activeStep?.stepNo !== 5 && (
                     <NavBar
                         stepNo={activeStep?.stepNo}
                         step={activeStep?.step}
                         stepPercent={activeStep?.stepPercent}
                         title={activeStep?.title}
                     />
+                )}
+
+                {/* ── Nav Récapitulatif ── */}
+                {activeStep?.stepNo === 5 && (
+                    <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-ge-gray-4 shadow-sm">
+                        <div className="flex items-center justify-center py-4 px-6">
+                            <div className="flex items-center gap-2">
+                                <div className="w-7 h-7 rounded-full bg-ge-green flex items-center justify-center">
+                                    <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
+                                <h1 className="font-bold text-ge-gray-1 text-lg">Récapitulatif de votre RDV</h1>
+                            </div>
+                        </div>
+                        <div className="h-1 bg-ge-green w-full" />
+                    </nav>
                 )}
 
                 {/* ── Page content ── */}

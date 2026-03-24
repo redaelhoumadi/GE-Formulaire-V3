@@ -70,26 +70,10 @@ export default function RecapitulatifPage() {
 
     return (
         <>
-            {/* ── Confirmation Nav ── */}
-            <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-ge-gray-4 shadow-sm">
-                <div className="flex items-center justify-center py-4 px-6">
-                    <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-ge-green flex items-center justify-center">
-                            <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                            </svg>
-                        </div>
-                        <h1 className="font-bold text-ge-gray-1 text-lg">Récapitulatif de votre RDV</h1>
-                    </div>
-                </div>
-                {/* Full green bar */}
-                <div className="h-1 bg-ge-green w-full" />
-            </nav>
-
-            <div className="pt-20">
+            <div className="pt-4">
 
                 {/* ── Hero confirmation ── */}
-                <div className="bg-ge-green/5 border border-ge-green/20 rounded-2xl mx-4 xl:mx-0 mt-4 px-6 py-6 flex flex-col xl:flex-row items-center gap-4">
+                <div className="bg-ge-green/5 border border-ge-green/20 rounded-2xl mx-0 xl:mx-0 px-6 py-6 flex flex-col xl:flex-row items-center gap-4">
                     {/* Big check */}
                     <div className="w-14 h-14 rounded-full bg-ge-green flex items-center justify-center shrink-0 shadow-[0_4px_14px_rgba(78,173,57,0.35)]">
                         <CheckCircle2 className="w-7 h-7 text-white" />
@@ -106,20 +90,20 @@ export default function RecapitulatifPage() {
 
                 {/* ── Main card : car + recap ── */}
                 <Card className="mt-4">
-                    <div className="xl:grid xl:grid-cols-3 xl:gap-6 items-start">
+                    <div className="xl:grid xl:grid-cols-2 xl:gap-6 items-center">
 
                         {/* Car visual */}
-                        <div className="flex justify-center mb-4 xl:mb-0">
+                        <div className="flex justify-center xl:mb-0">
                             <div className="scale-110 block xl:hidden">
                                 <ClickableCar value={submittedData.stepDiagnostic?.vitrage} disabled={true} />
                             </div>
-                            <div className="scale-125 justify-center hidden xl:flex">
+                            <div className="scale-150 justify-center w-full hidden xl:flex items-center">
                                 <ClickableCarPc value={submittedData.stepDiagnostic?.vitrage} disabled={true} />
                             </div>
                         </div>
 
                         {/* Recap details */}
-                        <div className="col-span-2 divide-y divide-ge-gray-4">
+                        <div className="divide-y divide-ge-gray-4">
                             <RecapSection
                                 icon={<Car className="w-4 h-4 text-ge-green" />}
                                 title="Diagnostic"

@@ -113,7 +113,7 @@ export default function Layout({ children }: any) {
                 {/* ── Page content ── */}
                 <div className="xl:px-52 pt-[72px] xl:pt-28">
                     <div className="xl:mx-auto xl:max-w-7xl">
-                        <div className="flex xl:flex-row xl:gap-8">
+                        <div className="flex xl:flex-row xl:gap-8 flex-col-reverse">
 
                             {/* MAIN CONTENT — pleine largeur si aside masqué */}
                             <div className={`${showAside ? 'xl:flex-1 xl:min-w-0' : 'w-full'} step-enter`}>

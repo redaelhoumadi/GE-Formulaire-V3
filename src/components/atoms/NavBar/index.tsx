@@ -31,7 +31,7 @@ export default function NavBar(props: NavBarProps) {
             <nav className="block xl:hidden bg-white fixed w-full z-20 top-0 left-0 shadow-sm">
                 <div className="flex items-center justify-between px-4 py-3">
                     {/* Step info */}
-                    <div className="flex-1 text-center">
+                    <div className="flex-1 text-center pl-24">
                         <p className="text-[10px] text-ge-gray-3 font-medium tracking-widest uppercase">
                             Étape {step}
                         </p>

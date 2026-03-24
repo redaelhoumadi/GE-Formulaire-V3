@@ -387,7 +387,7 @@ useEffect(() => {
 
         {/* AJOUT PLAQUE IMMATRICULATION */}
         {data.assurance && (
-          <Card>
+          <Card className="mt-5 xl:mt-12">
             <SectionHeader className="mt-5 xl:mt-12 mb-8" id="formVehiculeSIV">
               Renseignez votre immatriculation
             </SectionHeader>

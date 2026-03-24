@@ -113,7 +113,7 @@ export default function Layout({ children }: any) {
                 {/* ── Page content ── */}
                 <div className="xl:px-52 pt-[72px] xl:pt-28">
                     <div className="xl:mx-auto xl:max-w-7xl">
-                        <div className="flex xl:flex-row xl:gap-5 flex-col-reverse">
+                        <div className="flex xl:flex-row xl:gap-8">
 
                             {/* MAIN CONTENT — pleine largeur si aside masqué */}
                             <div className={`${showAside ? 'xl:flex-1 xl:min-w-0' : 'w-full'} step-enter`}>
@@ -124,7 +124,7 @@ export default function Layout({ children }: any) {
 
                             {/* ASIDE — largeur fixe, ne rétrécit jamais */}
                             <aside className="xl:mt-4 xl:mx-2 xl:w-[280px] xl:shrink-0 xl:px-1">
-                                <div className="sticky top-[7rem] flex flex-col gap-4">
+                                <div className="sticky top-[7rem] flex flex-col gap-6">
                                     {showAside && (
                                         <RecapInterventionCard />
                                     )}

@@ -50,7 +50,7 @@ const RecapSection = ({
 };
 
 const Advantage = ({ text }: { text: string }) => (
-    <div className="flex items-center gap-2 bg-ge-green/5 rounded-xl px-3 py-2.5">
+    <div className="flex items-center gap-2 rounded-xl px-3 py-2.5">
         <CheckCircle2 className="w-4 h-4 text-ge-green shrink-0" />
         <p className="text-sm text-ge-gray-1 font-medium">{text}</p>
     </div>
@@ -82,7 +82,7 @@ export default function RecapitulatifPage() {
                         <h2 className="font-extrabold text-ge-gray-1 text-xl md:text-2xl leading-tight">
                             {prenom ? `Merci ${prenom} !` : "Merci !"}
                         </h2>
-                        <p className="text-ge-gray-3 text-sm mt-1">
+                        <p className="text-ge-gray-1 text-sm mt-1">
                             Votre demande a bien été enregistrée. Un conseiller va vous appeler pour confirmer votre rendez-vous.
                         </p>
                     </div>

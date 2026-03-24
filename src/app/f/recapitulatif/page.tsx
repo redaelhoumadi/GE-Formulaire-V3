@@ -5,7 +5,7 @@ import TelephoneWhite from '@public/images/components/TelephoneWhite.svg';
 import SectionHeader from '@/components/atoms/SectionHeader';
 import Card from '@/components/atoms/Card';
 import Link from 'next/link';
-import { CheckCircle2, Car, Shield, Settings, MapPin, CalendarDays, User, Phone } from 'lucide-react';
+import { CheckCircle2, Car, Shield, MapPin, CalendarDays, User, Phone } from 'lucide-react';
 
 // clickable car
 import ClickableCar from '@/components/atoms/Forms/ClickableCar';
@@ -50,7 +50,7 @@ const RecapSection = ({
 };
 
 const Advantage = ({ text }: { text: string }) => (
-    <div className="flex items-center gap-2 bg-ge-green/5 rounded-md px-3 py-2.5">
+    <div className="flex items-center gap-2 bg-ge-green/5 rounded-xl px-3 py-2.5">
         <CheckCircle2 className="w-4 h-4 text-ge-green shrink-0" />
         <p className="text-sm text-ge-gray-1 font-medium">{text}</p>
     </div>
@@ -121,7 +121,7 @@ export default function RecapitulatifPage() {
                         {/* Recap details */}
                         <div className="col-span-2 divide-y divide-ge-gray-4">
                             <RecapSection
-                                icon={<Settings className="w-4 h-4 text-ge-green" />}
+                                icon={<Car className="w-4 h-4 text-ge-green" />}
                                 title="Diagnostic"
                                 items={[
                                     submittedData.stepDiagnostic?.vitrage,
@@ -129,7 +129,7 @@ export default function RecapitulatifPage() {
                                 ]}
                             />
                             <RecapSection
-                                icon={<Car className="w-4 h-4 text-ge-green" />}
+                                icon={<Shield className="w-4 h-4 text-ge-green" />}
                                 title="Véhicule & Assurance"
                                 items={[
                                     submittedData.stepVehicule?.marque_modele_vehicule

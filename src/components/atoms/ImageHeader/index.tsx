@@ -22,7 +22,7 @@ export default function ImageHeader(props: ImageHeaderProps) {
                 priority
                 src={srcMobile || ''}
                 alt="Header rouge"
-                width={1700}w
+                width={1700}
                 height={400}
             />
             <Image

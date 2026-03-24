@@ -62,7 +62,6 @@ export default function ButtonPill(props: ButtonPillProps) {
                 rounded-full
                 ${paddingProp}
                 text-center
-                mr-2
                 select-none
             `}
         >

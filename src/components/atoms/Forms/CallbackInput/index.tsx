@@ -65,10 +65,10 @@ export default function CallbackInput(props: CallbackInputProps) {
     };
 
     return (
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex">
             {/* CTA button or form */}
             {(!open || loading || sent) ? (
-                <ButtonPill onClick={onClick} padding="py-2 px-5" style={sent ? undefined : "success"} className={`cursor-pointer ${sent ? 'bg-ge-green/10 text-ge-green border border-ge-green/30' : ''}`}>
+                <ButtonPill onClick={onClick} padding="py-2.5 px-10" style={sent ? undefined : "success"} className={`cursor-pointer mr-1 ${sent ? 'bg-ge-green/10 text-ge-green border border-ge-green/30' : ''}`}>
                     <div className="flex items-center gap-2">
                         {loading ? (
                             <Image className="w-4 h-4 animate-spin" priority src={Spinner} alt="Chargement" />

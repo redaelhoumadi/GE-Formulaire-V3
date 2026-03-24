@@ -101,7 +101,7 @@ export default function NavBar(props: NavBarProps) {
                                     {index < steps.length - 1 && (
                                         <div className={`
                                             mx-3 h-0.5 w-16 mt-[-14px] rounded-full transition-all duration-500
-                                            ${(stepNo !== undefined && stepNo > s.no) ? 'bg-ge-green' : 'bg-ge-gray-4'}
+                                            ${(stepNo !== undefined && stepNo > s.no) ? 'bg-ge-green opacity-50' : 'bg-ge-gray-4'}
                                         `} />
                                     )}
                                 </div>

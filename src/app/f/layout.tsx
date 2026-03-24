@@ -98,25 +98,25 @@ export default function Layout({ children }: any) {
                     <div className="xl:mx-auto xl:max-w-7xl">
                         <div className="flex xl:flex-row xl:gap-5 flex-col-reverse">
 
-                            {/* MAIN CONTENT */}
-                            <div className="xl:flex-1 xl:min-w-0 step-enter">
+                            {/* MAIN CONTENT — pleine largeur si aside masqué */}
+                            <div className={`${showAside ? 'xl:flex-1 xl:min-w-0' : 'w-full'} step-enter`}>
                                 <div className="mx-4 xl:mx-auto xl:container pb-8">
                                     {children}
                                 </div>
                             </div>
 
-                            {/* ASIDE */}
-                            <aside className="xl:mt-4 xl:mx-2 xl:w-[300px] xl:shrink-0 xl:px-1">
+                            {/* ASIDE — largeur fixe, ne rétrécit jamais */}
+                            <aside className="xl:mt-4 xl:mx-2 xl:w-[280px] xl:shrink-0 xl:px-1">
                                 <div className="sticky top-[7rem] flex flex-col gap-4">
                                     {showAside && (
                                         <RecapInterventionCard />
                                     )}
-                                    {/*<div>
+                                    <div>
                                         <ImageHeader
                                             srcMobile={activeStep?.headerImgMobileSrc}
                                             srcDesktop={activeStep?.headerImgDesktopSrc}
                                         />
-                                    </div>*/}
+                                    </div>
                                 </div>
                             </aside>
 

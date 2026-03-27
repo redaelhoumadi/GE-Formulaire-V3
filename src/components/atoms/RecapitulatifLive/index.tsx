@@ -155,11 +155,8 @@ export default function RecapInterventionCard({
     return (
         <div className="bg-white rounded-2xl px-5 py-5 hidden xl:block">
             {/* Header */}
-            <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-ge-yellow flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-ge-gray-1" />
-                </div>
-                <h3 className="font-extrabold text-ge-gray-1 text-base">{title}</h3>
+            <div className="flex items-center gap-2 mb-4 border-ge-yellow border-l-[5px]" >
+                <h3 className="font-extrabold text-ge-gray-1 text-lg border-ge-yellow pl-2">{title}</h3>
             </div>
 
             {/* Items */}

@@ -12,7 +12,7 @@ export default function Card(props: CardProps) {
     const { children, className = '', type = 'primary', id, hoverable = false } = props;
 
     const typeStyles = type === 'primary'
-        ? 'bg-white border border-ge-gray-4 shadow-[0_2px_16px_rgba(0,0,0,0.06),0_1px_4px_rgba(0,0,0,0.04)]'
+        ? 'bg-white shadow-[0_1px_4px_rgba(0,0,0,0.02),0_1px_4px_rgba(0,0,0,0.02)]'
         : 'bg-ge-gray-5';
 
     const hoverStyles = hoverable

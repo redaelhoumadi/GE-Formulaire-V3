@@ -422,7 +422,7 @@ useEffect(() => {
               {vehicule && (
                 <div className="">
                   <div>
-                    <div className="flex">
+                    <div className="flex items-center justify-center">
                       <SectionMessage type="secondary" className="gap-1" justify={false}>
                         
                         <CheckCircle2 className="h-4 w-4 text-ge-green shrink-0" />

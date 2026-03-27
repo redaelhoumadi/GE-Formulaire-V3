@@ -153,7 +153,7 @@ export default function RecapInterventionCard({
     }, [stepDiagnostic, stepVehicule, stepRendezVous, stepCoordonnees]);
 
     return (
-        <div className="bg-white border border-ge-gray-4 shadow-[0_2px_16px_rgba(0,0,0,0.06)] rounded-2xl px-5 py-5 hidden xl:block">
+        <div className="bg-white rounded-2xl px-5 py-5 hidden xl:block">
             {/* Header */}
             <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-ge-yellow flex items-center justify-center">

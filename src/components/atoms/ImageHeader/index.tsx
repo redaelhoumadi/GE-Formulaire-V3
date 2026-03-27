@@ -26,7 +26,7 @@ export default function ImageHeader(props: ImageHeaderProps) {
                 height={400}
             />
             <Image
-                className="hidden mb-4 xl:block w-30 rounded-2xl border-ge-gray-4 shadow-[0_2px_16px_rgba(0,0,0,0.06),0_1px_4px_rgba(0,0,0,0.04)]"
+                className="hidden xl:block w-30 rounded-xl"
                 priority
                 src={srcDesktop || ''}
                 alt="Header rouge"

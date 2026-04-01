@@ -5,7 +5,7 @@ import TelephoneWhite from '@public/images/components/TelephoneWhite.svg';
 import SectionHeader from '@/components/atoms/SectionHeader';
 import Card from '@/components/atoms/Card';
 import Link from 'next/link';
-import { CheckCircle2, Car, Shield, MapPin, CalendarDays, User, Phone } from 'lucide-react';
+import { CheckCircle2, Car, Shield, MapPin, CalendarDays, User, Settings, Phone } from 'lucide-react';
 
 // clickable car
 import ClickableCar from '@/components/atoms/Forms/ClickableCar';
@@ -105,7 +105,7 @@ export default function RecapitulatifPage() {
                         {/* Recap details */}
                         <div className="divide-y divide-ge-gray-4">
                             <RecapSection
-                                icon={<Car className="w-4 h-4 text-ge-green" />}
+                                icon={<Settings className="w-4 h-4 text-ge-green" />}
                                 title="Diagnostic"
                                 items={[
                                     submittedData.stepDiagnostic?.vitrage,

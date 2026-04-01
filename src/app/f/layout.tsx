@@ -123,7 +123,7 @@ export default function Layout({ children }: any) {
                             </div>
 
                             {/* ASIDE — largeur fixe, ne rétrécit jamais */}
-                            <aside className="xl:mt-4 xl:mx-2 xl:w-[280px] xl:shrink-0 xl:px-1 bg-white rounded-2xl xl:h-fit py-1  shadow-[0_1px_4px_rgba(0,0,0,0.02),0_1px_4px_rgba(0,0,0,0.02)]">
+                            <aside className="xl:mt-4 xl:mx-2 xl:w-[280px] xl:shrink-0 xl:px-1 xl:bg-white rounded-2xl xl:h-fit xl:py-1  xl:shadow-[0_1px_4px_rgba(0,0,0,0.02),0_1px_4px_rgba(0,0,0,0.02)]">
                                 <div className="sticky top-[7rem] flex flex-col gap-4">
                                     {showAside && (
                                         <RecapInterventionCard />
